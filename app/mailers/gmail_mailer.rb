@@ -1,10 +1,12 @@
 class GmailMailer < ApplicationMailer
-    self.delivery_method = Rails.env.test? ? :test : :smtp 
     self.smtp_settings = {
-        address:   'smtp.gmail.com',
-        port:      587,
+        :address => 'smtp.gmail.com',
+        :port => 587,
+        :domain => 'gmail.com',
+        :authentication => 'plain',
         user_name:  Rails.application.credentials.dig(:gmail, :username),
-        password:   Rails.application.credentials.dig(:gmail, :password)
+        password:   Rails.application.credentials.dig(:gmail, :password),
+        :enable_starttls_auto => true
     }
 
     def invite_email(contact_id)

@@ -283,6 +283,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   bootsnap (>= 1.4.2)
   brakeman
   byebug

@@ -1,24 +1,25 @@
-# README
+# The Network
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Keeping Track Of Contacts
 
-Things you may want to cover:
+- `first_name`
+- `last_name`
+- `email`
+- `phone`
+- `last_proactive_outreach`
+- `last_inbound_message`
+- `locations` - References different cities / countries
+- `status` - This is an enum that can be `invited`, `member`, `alumni`
 
-* Ruby version
+## Contact Notes
 
-* System dependencies
+These are individual memos about contacts.
 
-* Configuration
+- `contact`
+- `note`
 
-* Database creation
+## Handling connection requests
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `to_contact` - References a contact ID
+- `from_contact` - References a contact ID
+- `request_context` - Opportunity for the individual to provide an overview for why

@@ -1,0 +1,146 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/ruby:2.6.4-node-browsers
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root  
+      - image: circleci/postgres:10.9-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle-test_test
+      - image: redis
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    # working_directory: ~/repo
+
+    steps:
+      - checkout
+      # Fixing chromdriver bug on CircleCI
+      - run:
+          name: Install Chrome
+          command: |
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i google-chrome.deb
+            sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
+
+      # Download and cache dependencies
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle check || bundle install
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      
+      # Handle yarn
+      - restore_cache:
+          keys:
+            - rails-demo-yarn-{{ checksum "yarn.lock" }}
+            - rails-demo-yarn-
+
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      # Database setup
+      
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+      - run: bundle exec rake db:migrate
+
+      # run tests!
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      # collect reports
+      # - store_test_results:
+      #     path: test-results
+      # - store_artifacts:
+      #     path: /tmp/test-results
+      #     destination: test-results
+  # deploy_stage:
+  #   docker:
+  #     - image: buildpack-deps:trusty
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Deploy Staging to Heroku
+  #         command: |
+  #           git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_STAGING_APP_NAME.git master
+  #     - run:
+  #         name: Install `heroku` command
+  #         command: |
+  #           curl https://cli-assets.heroku.com/install.sh | sh
+  #     - run:
+  #         name: Migrate heroku staging database
+  #         command: |
+  #           heroku run rake db:migrate -a $HEROKU_STAGING_APP_NAME
+  deploy_prod:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku Staging
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+      - run:
+          name: Install `heroku` command
+          command: |
+            curl https://cli-assets.heroku.com/install.sh | sh
+      - run:
+          name: Migrate heroku staging database
+          command: |
+            heroku run rake db:migrate -a $HEROKU_APP_NAME
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      # - deploy_stage:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: staging
+      - deploy_prod:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

@@ -18,6 +18,11 @@ These are individual memos about contacts.
 - `contact`
 - `note`
 
+## Locations
+
+- `city`
+- `state`
+
 ## Handling connection requests
 
 - `to_contact` - References a contact ID

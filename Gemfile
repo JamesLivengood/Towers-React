@@ -50,6 +50,7 @@ end
 group :test do
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
 
   # Quality checks

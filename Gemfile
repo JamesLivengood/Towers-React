@@ -6,6 +6,7 @@ ruby '2.6.4'
 gem 'addressable' # using this for the redis config
 gem 'google-api-client'
 gem 'graphql'
+gem 'rack-cors', :require => 'rack/cors'
 gem 'redis', '~> 4.1.3'
 gem 'sidekiq'
 

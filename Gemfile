@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.4'
 
 gem 'addressable' # using this for the redis config
+gem 'google-api-client'
 gem 'redis', '~> 4.1.3'
 gem 'sidekiq'
 

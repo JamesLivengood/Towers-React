@@ -7,7 +7,7 @@ class ApplicationMailer < ActionMailer::Base
     @broadcast = Broadcast.find(broadcast_id)
     mail(
       to: @contact.primary_email,
-      from: FROM_EMAIL,
+      from: from_email,
       subject: @broadcast.subject
     )
   end

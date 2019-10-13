@@ -10,6 +10,10 @@ class GmailMailer < ApplicationMailer
         :enable_starttls_auto => true
     }
 
+    def from_email
+        FROM_EMAIL
+    end
+
     def invite_email(contact_id)
         @contact = Contact.find(contact_id)
         mail(

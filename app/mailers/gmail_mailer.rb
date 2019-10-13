@@ -1,4 +1,5 @@
 class GmailMailer < ApplicationMailer
+    FROM_EMAIL = "\"Nick O'Neill\" <holler@nickoneill.com>"
     self.smtp_settings = {
         :address => 'smtp.gmail.com',
         :port => 587,
@@ -8,6 +9,10 @@ class GmailMailer < ApplicationMailer
         password:   Rails.application.credentials.dig(:gmail, :password),
         :enable_starttls_auto => true
     }
+
+    def from_email
+        FROM_EMAIL
+    end
 
     def invite_email(contact_id)
         @contact = Contact.find(contact_id)

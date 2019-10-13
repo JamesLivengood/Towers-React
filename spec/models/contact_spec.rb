@@ -12,4 +12,14 @@ RSpec.describe Contact, type: :model do
   it { should respond_to(:linkedin) }
   it { should respond_to(:twitter) }
   it { should respond_to(:instagram) }
+
+  it "generates an unsubscribe key on creation" do
+    c = create(:contact)
+    expect(c.unsubscribe_key).not_to be nil
+  end
+
+  it "splits comma separated tags" do
+    c = Contact.new(tags: 'one,two,three')
+    expect(c.tags).to eq ['one', 'two', 'three']
+  end
 end

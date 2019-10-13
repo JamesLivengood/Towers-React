@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_08_003905) do
+ActiveRecord::Schema.define(version: 2019_10_13_181415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,10 @@ ActiveRecord::Schema.define(version: 2019_10_08_003905) do
     t.string "instagram"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "tags", default: [], array: true
+    t.string "unsubscribe_key"
+    t.datetime "unsubscribed_at"
+    t.datetime "subscribed_at"
   end
 
 end

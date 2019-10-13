@@ -1,6 +1,7 @@
 require 'factory_bot_rails'
 require 'shoulda/matchers'
 require 'sidekiq/testing'
+require 'faker'
 
 RSpec.configure do |config|
   Sidekiq::Testing.fake!

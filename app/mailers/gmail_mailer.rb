@@ -1,4 +1,5 @@
 class GmailMailer < ApplicationMailer
+    FROM_EMAIL = "\"Nick O'Neill\" <holler@nickoneill.com>"
     self.smtp_settings = {
         :address => 'smtp.gmail.com',
         :port => 587,

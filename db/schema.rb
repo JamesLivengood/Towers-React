@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_10_13_184812) do
     t.text "tags", default: [], array: true
     t.datetime "send_at"
     t.text "markdown_body"
+    t.string "subject"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

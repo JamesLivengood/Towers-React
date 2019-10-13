@@ -9,6 +9,14 @@ class Contact < ApplicationRecord
         end
     end
 
+    def to_h
+        {
+            'email' => primary_email,
+            'first_name' => first_name,
+            'last_name' => last_name
+        }
+    end
+
     private
 
     def create_unsubscribe_key

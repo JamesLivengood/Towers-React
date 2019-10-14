@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +10,69 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+body {
+  color: rgba(0, 0, 0, 0.8);
+  padding-top: 5vh;
+  padding-bottom: 20vh;
+  font-size: 16px;
+  font-family: "EB Garamond", serif;
+  background-color: rgba(253, 252, 244, 0.5);
+  border-top: 4px solid #91d269;
+}
+@media only screen and (min-width: 800px) {
+  body {
+    padding-top: 17vh;
+  }
+}
+body a {
+  color: rgba(0, 0, 0, 0.85);
+  text-decoration: none;
+  transition: color 200ms ease-out, border 200ms ease-out;
+  border-bottom: 1px dotted red;
+}
+body nav {
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+body nav a {
+  border-bottom: none;
+}
+body nav a:hover {
+  border-bottom: 2px dotted #91d269;
+  transition: none;
+}
+body h1, body h2, body h3, body h4 {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  color: #111;
+}
+body h1 {
+  font-size: 4.7em;
+}
+body p, body li {
+  font-size: 1.6em;
+  font-weight: 300;
+  line-height: 1.8em;
+  color: #222;
+}
+body p {
+  margin-bottom: 1em;
+}
+body time {
+  color: #bbb;
+}
+body #subscription_cta {
+  font-family: ui-system, sans-serif;
+  margin-top: 36px;
+  margin-bottom: 36px;
+}
+body #subscription_cta p {
+  font-size: 1.4em;
+}
+body #subscription_cta button {
+  background-color: #91d269;
+  color: #fff;
+  border: none;
+  border-radius: 0 5px 5px 0;
 }

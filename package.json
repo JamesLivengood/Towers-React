@@ -15,9 +15,6 @@
     "yarn": "1.15.2"
   },
   "version": "0.1.0",
-  "devDependencies": {
-    "webpack-dev-server": "^3.8.2"
-  },
   "scripts": {
     "build": "yarn --cwd client install && yarn --cwd client build",
     "deploy": "cp -a client/build/. public/",

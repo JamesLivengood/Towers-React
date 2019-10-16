@@ -1,5 +1,5 @@
 class PagesController < ActionController::Base
-    layout 'application'
+    layout 'thenetwork'
     def homepage
 
     end

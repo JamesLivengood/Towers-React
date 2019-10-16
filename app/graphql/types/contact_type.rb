@@ -10,5 +10,6 @@ module Types
         field :linkedin, String, null: true
         field :twitter, String, null: true
         field :instagram, String, null: true
+        field :unsubscribed_at, GraphQL::Types::ISO8601DateTime, null: true
     end
 end

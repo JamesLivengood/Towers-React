@@ -44,6 +44,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'graphiql-rails'
   gem 'web-console', '>= 3.3.0'

@@ -15,5 +15,22 @@ module Types
     def all_contacts
       Contact.all
     end
+
+    # field :contact, ContactType, null: true do
+    #   argument :id, ID, required: true
+    # end
+
+    # def contact(id:)
+    #   Contact.find(id)
+    # end
+
+    field :unsubscribe_contact, ContactType, null: true do
+      argument :id, ID, required: true
+      argument :unsubscribe_key, String, required: true
+    end
+
+    def unsubscribe_contact(id:, unsubscribe_key:)
+      Contact.where(id: id, unsubscribe_key: unsubscribe_key).first
+    end
   end
 end

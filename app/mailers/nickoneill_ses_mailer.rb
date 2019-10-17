@@ -22,4 +22,14 @@ class NickoneillSesMailer < ApplicationMailer
             subject: subject
         )
     end
+
+    def broadcast(contact_id, broadcast_id)
+        @contact = Contact.find(contact_id)
+        @broadcast = Broadcast.find(broadcast_id)
+        mail(
+            to: @contact.primary_email,
+            from: FROM_EMAIL,
+            subject: @broadcast.subject
+        )
+    end
 end

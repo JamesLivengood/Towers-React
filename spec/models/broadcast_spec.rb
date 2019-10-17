@@ -5,6 +5,7 @@ RSpec.describe Broadcast, type: :model do
   it { should respond_to(:send_at) }
   it { should respond_to(:markdown_body) }
   it { should respond_to(:subject) }
+  it { should respond_to(:sent_at) }
 
   html_markdown = "Hey {{first_name}},
 

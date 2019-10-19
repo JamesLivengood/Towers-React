@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { CSVReader } from 'react-papaparse';
 import SpreadsheetPreview from '../SpreadsheetPreview';
+import axios from 'axios';
 
 type IProps = {
 };
@@ -10,8 +11,16 @@ const SpreadsheetUploader: FC<IProps> = (props) => {
   const [data, setData] = React.useState([]);
 
   const handleReadCSV = (data) => {
-    console.log(data);
+    // console.log(data);
     setData(data.data);
+    axios.post(
+      '/api/towers',
+      { towers: data.data },
+      { headers: { 'Content-Type': 'application/json' } }
+    ).then(res => console.log(res))
+     .catch(error =>{
+       debugger;
+     });
   }
 
   const handleOnError = (err, file, inputElem, reason) => {

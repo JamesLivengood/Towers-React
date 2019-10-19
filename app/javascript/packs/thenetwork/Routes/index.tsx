@@ -13,7 +13,6 @@ const RoutesContainer = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Redirect from="/" to="/" />
         </Switch>
       </Router>
     );

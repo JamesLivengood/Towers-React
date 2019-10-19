@@ -6,4 +6,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get '/*path' => 'pages#homepage'
   root to: 'pages#homepage'
+
+  namespace 'api', defaults: {format: :json} do
+    resources :towers, only: :create
+    resources :transmitters, only: :create
+  end
 end

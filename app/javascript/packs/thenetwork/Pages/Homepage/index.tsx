@@ -5,7 +5,7 @@ import SpreadsheetUploader from '../../Common/Components/SpreadsheetUploader';
 const Homepage: FC = (props) => {
     return (
         <PageWithHeader header={"Towers"}>
-            <p>Welcome!</p>
+            <p>Upload tower sites:</p>
             <SpreadsheetUploader />
         </PageWithHeader>
     );

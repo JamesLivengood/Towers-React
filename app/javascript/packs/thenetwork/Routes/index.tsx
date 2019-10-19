@@ -1,6 +1,6 @@
 import React from 'react';
 import { Homepage } from '../Pages/Homepage';
-import { Unsubscribe } from '../Pages/Unsubscribe';
+
 import {
     Route,
     Redirect,
@@ -13,11 +13,10 @@ const RoutesContainer = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route exact path="/unsubscribe/:contactId/:unsubscribeKey" component={Unsubscribe} />
           <Redirect from="/" to="/" />
         </Switch>
       </Router>
     );
   };
-  
+
   export default RoutesContainer;

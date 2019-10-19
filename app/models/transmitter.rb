@@ -1,0 +1,2 @@
+class Transmitter < ApplicationRecord
+end

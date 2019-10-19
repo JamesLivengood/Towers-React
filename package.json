@@ -25,5 +25,10 @@
     "typescript": "^3.6.4",
     "yarn": "1.15.2"
   },
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "scripts": {
+    "build": "babel src -d lib",
+    "test": "jest",
+    "start": "webpack-dev-server -d --config webpack.dev.config.js --content-base public/ --progress --colors"
+  }
 }

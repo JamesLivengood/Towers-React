@@ -1,32 +1,11 @@
-# The Network
+# README
 
-[Gmail API Quickstart](https://developers.google.com/gmail/api/quickstart/ruby)
+```bundle install```
 
-## Keeping Track Of Contacts
+```npm install```
 
-- `first_name`
-- `last_name`
-- `email`
-- `phone`
-- `last_proactive_outreach`
-- `last_inbound_message`
-- `locations` - References different cities / countries
-- `status` - This is an enum that can be `invited`, `member`, `alumni`
+```spring rake db:reset```
 
-## Contact Notes
+```spring rails s```
 
-These are individual memos about contacts.
-
-- `contact`
-- `note`
-
-## Locations
-
-- `city`
-- `state`
-
-## Handling connection requests
-
-- `to_contact` - References a contact ID
-- `from_contact` - References a contact ID
-- `request_context` - Opportunity for the individual to provide an overview for why
+```ruby ./bin/webpack-dev-server```

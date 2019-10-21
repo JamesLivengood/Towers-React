@@ -1,5 +1,6 @@
 import React from 'react';
 import { Homepage } from '../Pages/Homepage';
+import { Map } from '../Pages/Map';
 
 import {
     Route,
@@ -12,7 +13,8 @@ const RoutesContainer = () => {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Homepage} />
+          <Route exact path="/" component={Map} />
+          <Route exact path="/uploads" component={Homepage} />
         </Switch>
       </Router>
     );

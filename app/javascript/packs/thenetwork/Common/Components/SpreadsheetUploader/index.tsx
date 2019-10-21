@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { CSVReader } from 'react-papaparse';
-import SpreadsheetPreview from '../SpreadsheetPreview';
+// import SpreadsheetPreview from '../SpreadsheetPreview';
 import axios from 'axios';
 
 type IProps = {
@@ -11,16 +11,34 @@ const SpreadsheetUploader: FC<IProps> = (props) => {
   const [data, setData] = React.useState([]);
 
   const handleReadCSV = (data) => {
-    // console.log(data);
     setData(data.data);
+
+    const paramKey = data.data[0].includes('sitetype') ? 'transmitters' : 'towers';
+
     axios.post(
-      '/api/towers',
-      { towers: data.data },
+      `/api/${paramKey}`,
+      { [paramKey]: parseData(data.data) },
       { headers: { 'Content-Type': 'application/json' } }
     ).then(res => console.log(res))
+     .then(res => console.log(res))
      .catch(error =>{
-       debugger;
+       console.log(error);
      });
+  }
+
+  const parseData = (arr) => {
+    const headers = arr[0];
+    const convertedArr = [];
+
+    arr.slice(1).forEach(dataSubject => {
+      const object = {};
+
+      headers.forEach((header, idx) => {
+        object[header] = dataSubject[idx];
+      });
+      convertedArr.push(object);
+    });
+    return convertedArr;
   }
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -38,7 +56,7 @@ const SpreadsheetUploader: FC<IProps> = (props) => {
         // inputRef={fileInput}
         onError={handleOnError}
       />
-      <SpreadsheetPreview data={data}/>
+      {/* <SpreadsheetPreview data={data}/> */}
     </div>
     )
   }

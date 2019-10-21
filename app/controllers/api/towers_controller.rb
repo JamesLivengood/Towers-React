@@ -1,10 +1,12 @@
 class Api::TowersController < ApplicationController
   def create
-    tower_params = params[:tower]
-    if tower = Tower.create(tower_params)
-      render json: {}, status: 200
-    else
-      render json: { error: { messages: tower.errors.full_messages } }, status: 401
+    towers_params = params[:towers]
+    errors = []
+
+    towers_params.each do |tower|
+      Tower.create(tower.to_enum.to_h)
     end
+
+    render json: { errors: errors }, status: 200
   end
 end

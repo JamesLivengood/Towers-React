@@ -11,7 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
-body {
+/* body {
   color: rgba(0, 0, 0, 0.8);
   padding-top: 5vh;
   padding-bottom: 20vh;
@@ -75,4 +75,4 @@ body #subscription_cta button {
   color: #fff;
   border: none;
   border-radius: 0 5px 5px 0;
-}
+} */

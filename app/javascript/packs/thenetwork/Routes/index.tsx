@@ -1,6 +1,6 @@
 import React from 'react';
 import { Homepage } from '../Pages/Homepage';
-import { Map } from '../Pages/Map';
+import TowerMap from '../Pages/TowerMap';
 
 import {
     Route,
@@ -13,11 +13,11 @@ const RoutesContainer = () => {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Map} />
+          <Route exact path="/" component={TowerMap} />
           <Route exact path="/uploads" component={Homepage} />
         </Switch>
       </Router>
     );
   };
 
-  export default RoutesContainer;
+export default RoutesContainer;

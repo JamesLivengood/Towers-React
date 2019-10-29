@@ -9,4 +9,8 @@ class Api::TransmittersController < ApplicationController
 
     render json: { errors: errors }, status: 200
   end
+
+  def index
+    render json: Transmitter.all.as_json, status: 200
+  end
 end

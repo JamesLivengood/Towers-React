@@ -9,4 +9,8 @@ class Api::TowersController < ApplicationController
 
     render json: { errors: errors }, status: 200
   end
+
+  def index
+    render json: Tower.all.as_json, status: 200
+  end
 end

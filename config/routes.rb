@@ -4,12 +4,12 @@ Rails.application.routes.draw do
   end
   post "/graphql", to: "graphql#execute"
   get "/map", to: "pages#map"
+  namespace 'api', defaults: {format: :json} do
+    resources :towers, only: [:create, :index]
+    resources :transmitters, only: [:create, :index]
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get '/*path' => 'pages#homepage'
   root to: 'pages#homepage'
-
-  namespace 'api', defaults: {format: :json} do
-    resources :towers, only: :create
-    resources :transmitters, only: :create
-  end
 end

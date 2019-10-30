@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { fetchTowers, fetchTransmitters } from '../../Utils/fetches';
+import { fetchTowers, fetchTransmitters, fetchAntennaSearch } from '../../Utils/fetches';
+import axios from 'axios';
+
 const TowerMap = ({ google }) => {
   const [zoom, setZoom] = React.useState(11);
   const [center, setCenter] = React.useState({ lat: 40.101013, lng: -74.404992 });
@@ -25,6 +27,8 @@ const TowerMap = ({ google }) => {
       var location = places[0].geometry.location;
       setCenter({ lat: location.lat(), lng: location.lng() });
     });
+
+    // fetchAntennaSearch();
   };
 
   const blueIconUrl = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"

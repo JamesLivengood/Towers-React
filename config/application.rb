@@ -34,7 +34,7 @@ module Thenetwork
     config.hosts << "network.nickoneill.com"
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins 'http://localhost:3000', 'https://towers-n-transmitters.herokuapp.com/' #replace this url with that of your own heroku client app
         resource '*', headers: :any, methods: [:get, :post, :options]
       end
     end

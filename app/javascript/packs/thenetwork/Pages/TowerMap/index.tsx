@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { fetchTowers, fetchTransmitters } from '../../Utils/fetches';
 const TowerMap = ({ google }) => {
-  const initialCenter = { lat: 40.101013, lng: -74.404992 };
-  const zoom = 11;
+  const [zoom, setZoom] = React.useState(11);
+  const [center, setCenter] = React.useState({ lat: 40.101013, lng: -74.404992 });
   const [towers, setTowers] = React.useState([]);
   const [transmitters, setTransmitters] = React.useState([]);
 
@@ -22,13 +22,8 @@ const TowerMap = ({ google }) => {
       console.log('places changed !!')
 
       var places = searchBox.getPlaces();
-      console.log(places[0].geometry.location.lat())
-
-      // this.setState({
-      //   mapCenter: { lat: places[0].geometry.location.lat(), lng: places[0].geometry.location.lng() }
-      // },
-      //   () => this.onLatLngChanged());
-
+      var location = places[0].geometry.location;
+      setCenter({ lat: location.lat(), lng: location.lng() });
     });
   };
 
@@ -40,7 +35,8 @@ const TowerMap = ({ google }) => {
       <Map
         google={google}
         zoom={zoom}
-        initialCenter={initialCenter}
+        initialCenter={center}
+        center={center}
         style={{ height: '100%', width: '100%' }}
         onReady={fetchMarkers}
         id="map"

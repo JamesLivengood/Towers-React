@@ -27,8 +27,6 @@ const TowerMap = ({ google }) => {
       var location = places[0].geometry.location;
       setCenter({ lat: location.lat(), lng: location.lng() });
     });
-
-    // fetchAntennaSearch();
   };
 
   const blueIconUrl = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"

@@ -5,6 +5,7 @@ class AntennaSearchFetcher
   def initialize(lat, lng)
     @lat = lat
     @lng = lng
+    @calculator = LatLngCalculator.new(lat, lng)
   end
 
   def fetch!

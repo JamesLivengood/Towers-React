@@ -2,18 +2,18 @@
 require 'net/http'
 class AntennaSearchFetcher
   attr_reader :lat, :lng
-  def initialize(lat:, lng:)
+  def initialize(lat, lng)
     @lat = lat
     @lng = lng
   end
 
   def fetch!
-    uri = URI('http://antennasearch.com/')
+    uri = URI(url)
     Net::HTTP.get(uri)
   end
 
-  def get_url
-    "http://www.antennasearch.com/sitestart.asp?reportname001=antennacheck&raditem=002&reportname002=antennacheck&x=45&y=9&sourcepagename=SrchAnt&cmdRequest=process&latitude002=#{lat}&longitude002=-#{lng}"
+  def url
+    "http://www.antennasearch.com/sitestart.asp?reportname001=antennacheck&raditem=002&reportname002=antennacheck&x=45&y=9&sourcepagename=SrchAnt&cmdRequest=process&latitude002=#{lat}&longitude002=#{lng}"
   end
 
   def move_2_miles(direction)

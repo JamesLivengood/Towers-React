@@ -1,5 +1,6 @@
 import React from 'react';
 import { Homepage } from '../Pages/Homepage';
+import { Downloader } from '../Pages/Downloader';
 import TowerMap from '../Pages/TowerMap';
 
 import {
@@ -15,6 +16,7 @@ const RoutesContainer = () => {
         <Switch>
           <Route exact path="/" component={TowerMap} />
           <Route exact path="/uploads" component={Homepage} />
+          <Route exact path="/downloader" component={Downloader}/>
         </Switch>
       </Router>
     );

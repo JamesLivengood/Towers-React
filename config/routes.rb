@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace 'api', defaults: {format: :json} do
     resources :towers, only: [:create, :index]
     resources :transmitters, only: [:create, :index]
+    resources :antenna_search_urls, only: [:create]
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

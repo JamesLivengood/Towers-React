@@ -1,11 +1,11 @@
 # https://stackoverflow.com/questions/15804425/curl-on-ruby-on-rails
 require 'net/http'
 class AntennaSearchFetcher
-  attr_reader :lat, :lng
+  attr_accessor :lat, :lng, :calculator
   def initialize(lat, lng)
     @lat = lat
     @lng = lng
-    @calculator = LatLngCalculator.new(lat, lng)
+    @calculator = LatLngCalculator.new
   end
 
   def fetch!
@@ -17,16 +17,21 @@ class AntennaSearchFetcher
     "http://www.antennasearch.com/sitestart.asp?reportname001=antennacheck&raditem=002&reportname002=antennacheck&x=45&y=9&sourcepagename=SrchAnt&cmdRequest=process&latitude002=#{lat}&longitude002=#{lng}"
   end
 
-  def move_2_miles(direction)
+  def move(direction, distance)
+    # Distance is in miles
     case direction
     when :up
-      @lng = lng + 1
+      @lat = lat + calculator.change_in_latitude(distance)
     when :down
-      @lng = lng - 1
-    when :left
-      @lat = lat - 1
+      @lat = lat - calculator.change_in_latitude(distance)
     when :right
-      @lat = lat + 1
+      @lng = lng + calculator.change_in_longitude(lat, distance)
+    when :left
+      @lng = lng - calculator.change_in_longitude(lat, distance)
     end
+  end
+
+  def coords
+    [lat, lng]
   end
 end

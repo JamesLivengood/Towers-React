@@ -70,3 +70,14 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'minitest-stub_any_instance'
+  gem 'minitest-stub-const'
+end
+
+# gem 'Dhalang'
+# gem 'puppeteer', '~> 0.0.1'
+gem 'capybara-chrome'

@@ -71,6 +71,18 @@ GEM
     byebug (11.0.1)
     cane (3.0.0)
       parallel
+    capybara (3.29.0)
+      addressable
+      mini_mime (>= 0.1.3)
+      nokogiri (~> 1.8)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      regexp_parser (~> 1.5)
+      xpath (~> 3.2)
+    capybara-chrome (0.1.23)
+      capybara
+      json
+      websocket-driver
     codeclimate-engine-rb (0.4.1)
       virtus (~> 1.0)
     coercible (1.0.0)
@@ -159,6 +171,11 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.12.2)
+    minitest-rails (6.0.0)
+      minitest (~> 5.10)
+      railties (~> 6.0.0)
+    minitest-stub-const (0.6)
+    minitest-stub_any_instance (1.0.2)
     msgpack (1.3.1)
     multi_json (1.13.1)
     multipart-post (2.1.1)
@@ -220,6 +237,7 @@ GEM
       parser (>= 2.5.0.0, < 2.7, != 2.5.1.1)
       psych (~> 3.1.0)
       rainbow (>= 2.0, < 4.0)
+    regexp_parser (1.6.0)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -324,6 +342,8 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    xpath (3.2.0)
+      nokogiri (~> 1.8)
     zeitwerk (2.1.10)
 
 PLATFORMS
@@ -335,6 +355,7 @@ DEPENDENCIES
   brakeman
   byebug
   cane
+  capybara-chrome
   database_cleaner
   factory_bot_rails
   faker
@@ -346,6 +367,10 @@ DEPENDENCIES
   kramdown
   liquid
   listen (>= 3.0.5, < 3.2)
+  minitest
+  minitest-rails
+  minitest-stub-const
+  minitest-stub_any_instance
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rack-cors

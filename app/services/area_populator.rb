@@ -11,7 +11,7 @@ class AreaPopulator
     urls = []
     original_lng = fetcher.lng
     vertical_max = fetcher.lat + calculator.change_in_latitude(height + 1.8)
-    horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width - 1.8)
+    horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width + 1.8)
 
     until fetcher.lat > vertical_max
       until fetcher.lng < horizontal_max

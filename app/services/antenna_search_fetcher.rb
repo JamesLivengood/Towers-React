@@ -34,13 +34,20 @@ class AntennaSearchFetcher
     IO.copy_stream(transmitter_download, transmitter_link.split('/').last)
 
     CSV.new(tower_download, headers: true).each do |tower|
-      Tower.create(tower.to_h.delete_if { |k, v| k.empty? })
+      Tower.create(tower.to_h.delete_if { |k, v| !k || k.empty? })
     end
 
     CSV.new(transmitter_download, headers: true).each do |transmitter|
-      Transmitter.create(transmitter.to_h.delete_if { |k, v| k.empty? })
+      Transmitter.create(transmitter.to_h.delete_if { |k, v| !k || k.empty? })
     end
 
+    driver.quit
+  rescue Selenium::WebDriver::Error::TimeoutError
+    link_element = begin
+      driver.find_element(:css, "a[href*='1/1/2001'")
+    rescue Selenium::WebDriver::Error::NoSuchElementError
+    end
+    FailedDownload.create(url: url, lat: lat, lng: lng) unless link_element.present? # signifies on off-map location, so not an error
     driver.quit
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_19_205350) do
+ActiveRecord::Schema.define(version: 2019_11_04_035126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,14 @@ ActiveRecord::Schema.define(version: 2019_10_19_205350) do
     t.string "unsubscribe_key"
     t.datetime "unsubscribed_at"
     t.datetime "subscribed_at"
+  end
+
+  create_table "failed_downloads", force: :cascade do |t|
+    t.float "lat"
+    t.float "lng"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "towers", force: :cascade do |t|

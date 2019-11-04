@@ -4,7 +4,7 @@ import { fetchTowers, fetchTransmitters } from '../../Utils/fetches';
 
 const TowerMap = ({ google }) => {
   const [zoom, setZoom] = React.useState(11);
-  const [center, setCenter] = React.useState({ lat: 40.101013, lng: -74.404992 });
+  const [center, setCenter] = React.useState({ lat: localStorage.lat || 40.101013, lng: localStorage.lng || -74.404992 });
   const [towers, setTowers] = React.useState([]);
   const [transmitters, setTransmitters] = React.useState([]);
 
@@ -25,8 +25,14 @@ const TowerMap = ({ google }) => {
       var places = searchBox.getPlaces();
       var location = places[0].geometry.location;
       setCenter({ lat: location.lat(), lng: location.lng() });
+
+      localStorage.lat = location.lat();
+      localStorage.lng = location.lng();
     });
   };
+
+  const saveCenter = (mapProps, map) => {
+  }
 
   const blueIconUrl = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 
@@ -38,6 +44,7 @@ const TowerMap = ({ google }) => {
         zoom={zoom}
         initialCenter={center}
         center={center}
+        onDragend={saveCenter}
         style={{ height: '100%', width: '100%' }}
         onReady={fetchMarkers}
         id="map"
@@ -55,7 +62,7 @@ const TowerMap = ({ google }) => {
               <Marker
                 key={idx}
                 position={{ lat: t.latitude, lng: t.longitude }}
-                icon={{ url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }}
+                icon={{ url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", scale: 33 }}
               />
             );
           })

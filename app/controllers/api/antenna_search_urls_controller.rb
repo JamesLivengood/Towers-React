@@ -1,8 +1,8 @@
 class Api::AntennaSearchUrlsController < ApplicationController
   def create
-    urls = AreaUrlGenerator.new(
+    urls = AreaPopulator.new(
       url_params[:lat].to_i, url_params[:lng].to_i, url_params[:width].to_i, url_params[:height].to_i
-    ).generate_urls!
+    ).populate!
 
     render json: urls, status: :ok
   end

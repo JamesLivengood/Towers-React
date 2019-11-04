@@ -1,5 +1,6 @@
 # https://stackoverflow.com/questions/15804425/curl-on-ruby-on-rails
 require 'net/http'
+require 'open-uri'
 class AntennaSearchFetcher
   attr_accessor :lat, :lng, :calculator
   def initialize(lat, lng)
@@ -9,20 +10,36 @@ class AntennaSearchFetcher
   end
 
   def fetch!
+    Capybara.javascript_driver = :webkit
     options = Selenium::WebDriver::Chrome::Options.new(args: ['headless'])
     driver = Selenium::WebDriver.for(:chrome, options: options)
+    wait = Selenium::WebDriver::Wait.new
 
     driver.get(url)
 
-    tower_link = wait.until do
+    tower_link = wait.until {
       driver.find_element(:css, "a[href*='/downloads_ant_free/Towers']")
+    }.attribute('href')
+
+    transmitter_link = wait.until {
+      driver.find_element(:css, "a[href*='/downloads_ant_free/Transmitters']")
+    }.attribute('href')
+
+    sleep(1)
+
+    tower_download = open(tower_link)
+    transmitter_download = open(transmitter_link)
+
+    IO.copy_stream(tower_download, tower_link.split('/').last)
+    IO.copy_stream(transmitter_download, transmitter_link.split('/').last)
+
+    CSV.new(tower_download, headers: true).each do |tower|
+      Tower.create(tower.to_h.delete_if { |k, v| k.empty? })
     end
 
-    transmitter_link = wait.until do
-      driver.find_element(:css, "a[href*='/downloads_ant_free/Towers']")
+    CSV.new(transmitter_download, headers: true).each do |transmitter|
+      Transmitter.create(transmitter.to_h.delete_if { |k, v| k.empty? })
     end
-
-
 
     driver.quit
   end

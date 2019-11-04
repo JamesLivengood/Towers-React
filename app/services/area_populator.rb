@@ -1,4 +1,4 @@
-class AreaUrlGenerator
+class AreaPopulator
   attr_reader :height, :width, :calculator, :fetcher
   def initialize(lat, lng, width, height)
     @height = height
@@ -7,19 +7,21 @@ class AreaUrlGenerator
     @fetcher = AntennaSearchFetcher.new(lat, lng)
   end
 
-  def generate_urls!
+  def populate!
     urls = []
     original_lng = fetcher.lng
-    vertical_max = fetcher.lat + calculator.change_in_latitude(height + 2)
-    horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width - 2)
+    vertical_max = fetcher.lat + calculator.change_in_latitude(height + 1.8)
+    horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width - 1.8)
 
     until fetcher.lat > vertical_max
       until fetcher.lng < horizontal_max
         urls << fetcher.url
-        fetcher.move(:left, 2)
+        fetcher.fetch!
+
+        fetcher.move(:left, 1.8)
       end
       fetcher.lng = original_lng
-      fetcher.move(:up, 2)
+      fetcher.move(:up, 1.8)
     end
 
     urls

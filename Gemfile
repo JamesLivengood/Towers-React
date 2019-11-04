@@ -83,3 +83,4 @@ end
 gem 'capybara-chrome'
 
 gem 'selenium-webdriver'
+gem 'csv'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_04_035126) do
+ActiveRecord::Schema.define(version: 2019_11_04_050820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 2019_11_04_035126) do
   end
 
   create_table "failed_downloads", force: :cascade do |t|
+    t.float "lat"
+    t.float "lng"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "marked_ignore"
+  end
+
+  create_table "succesful_downloads", force: :cascade do |t|
     t.float "lat"
     t.float "lng"
     t.string "url"

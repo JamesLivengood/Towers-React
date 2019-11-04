@@ -15,15 +15,21 @@ class AntennaSearchFetcher
     driver = Selenium::WebDriver.for(:chrome, options: options)
     wait = Selenium::WebDriver::Wait.new
 
+    puts "Loading #{url}..."
     driver.get(url)
 
     tower_link = wait.until {
-      driver.find_element(:css, "a[href*='/downloads_ant_free/Towers']")
+      driver.find_element(:css, "a[href*='/downloads_ant_free/Towers'], a[href*='1/1/2001']")
     }.attribute('href')
 
     transmitter_link = wait.until {
-      driver.find_element(:css, "a[href*='/downloads_ant_free/Transmitters']")
+      driver.find_element(:css, "a[href*='/downloads_ant_free/Transmitters'], a[href*='62.4161846226896']")
     }.attribute('href')
+
+    if tower_link == "http://www.antennasearch.com/1/1/2001"
+      driver.quit
+      return
+    end
 
     sleep(1)
 
@@ -42,9 +48,11 @@ class AntennaSearchFetcher
     end
 
     driver.quit
-  rescue Selenium::WebDriver::Error::TimeoutError
+    SuccessfulDownload.create(url: url, lat: lat, lng: lng)
+
+  rescue Selenium::WebDriver::Error::TimeoutError, OpenURI::HTTPError
     link_element = begin
-      driver.find_element(:css, "a[href*='1/1/2001'")
+      driver.find_element(:css, "a[href*='1/1/2001']")
     rescue Selenium::WebDriver::Error::NoSuchElementError
     end
     FailedDownload.create(url: url, lat: lat, lng: lng) unless link_element.present? # signifies on off-map location, so not an error

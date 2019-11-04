@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const fetchTowers = (setTowers): void => {
+export const fetchTowers = (setTowers, bounds): void => {
   axios.get(
-    `/api/towers`
+    `/api/towers?latmin=${bounds.na.j}&latmax=${bounds.na.l}&lngmin=${bounds.ga.l}&lngmax=${bounds.ga.j}`
   ).then(res => {
     setTowers(res.data);
   })
@@ -11,9 +11,9 @@ export const fetchTowers = (setTowers): void => {
   });
 };
 
-export const fetchTransmitters = (setTransmitters): void => {
+export const fetchTransmitters = (setTransmitters, bounds): void => {
   axios.get(
-    `/api/transmitters`
+    `/api/transmitters?latmin=${bounds.na.j}&latmax=${bounds.na.l}&lngmin=${bounds.ga.l}&lngmax=${bounds.ga.j}`
   ).then(res => {
     setTransmitters(res.data);
   })

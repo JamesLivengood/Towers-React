@@ -7,10 +7,11 @@ const TowerMap = ({ google }) => {
   const [center, setCenter] = React.useState({ lat: localStorage.lat || 40.101013, lng: localStorage.lng || -74.404992 });
   const [towers, setTowers] = React.useState([]);
   const [transmitters, setTransmitters] = React.useState([]);
+  const [centerMarker, setCenterMarker] = React.useState(undefined)
 
-  const fetchMarkers = (): void => {
-    fetchTowers(setTowers);
-    fetchTransmitters(setTransmitters);
+  const fetchMarkers = (mapProps, map): void => {
+    fetchTowers(setTowers, map.getBounds());
+    fetchTransmitters(setTransmitters, map.getBounds());
     onLoad();
   }
 
@@ -28,10 +29,14 @@ const TowerMap = ({ google }) => {
 
       localStorage.lat = location.lat();
       localStorage.lng = location.lng();
+
+      setCenterMarker({ lat: location.lat(), lng: location.lng() })
     });
   };
 
   const saveCenter = (mapProps, map) => {
+    localStorage.lat = map.getCenter().lat()
+    localStorage.lng = map.getCenter().lng()
   }
 
   const blueIconUrl = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
@@ -46,13 +51,20 @@ const TowerMap = ({ google }) => {
         center={center}
         onDragend={saveCenter}
         style={{ height: '100%', width: '100%' }}
-        onReady={fetchMarkers}
+        onTilesloaded={fetchMarkers}
         id="map"
       >
         {
           towers.map((tower, idx) => {
             return (
-              <Marker key={idx} position={{ lat: tower.latitude, lng: tower.longitude }} />
+              <Marker
+                key={idx}
+                position={{ lat: tower.latitude, lng: tower.longitude }}
+                icon={{
+                  url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                  scaledSize: new google.maps.Size(32, 32)
+                }}
+              />
             );
           })
         }
@@ -62,10 +74,24 @@ const TowerMap = ({ google }) => {
               <Marker
                 key={idx}
                 position={{ lat: t.latitude, lng: t.longitude }}
-                icon={{ url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", scale: 33 }}
+                icon={{
+                  url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                  scaledSize: new google.maps.Size(21, 21)
+                  // size: new google.maps.Size(25, 50)
+                }}
               />
             );
           })
+        }
+        { centerMarker ?
+          <Marker
+            key="centerMarker"
+            position={{ lat: centerMarker.lat, lng: centerMarker.lng }}
+            icon={{
+              url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
+              scaledSize: new google.maps.Size(27, 27)
+            }}
+          /> : undefined
         }
       </Map>
     </div>

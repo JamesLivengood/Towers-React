@@ -11,6 +11,10 @@ class Api::TowersController < ApplicationController
   end
 
   def index
-    render json: Tower.all.as_json, status: 200
+    towers = Tower.where("latitude > ?", params[:latmin])
+                  .where("latitude < ?", params[:latmax])
+                  .where("longitude > ?", params[:lngmin])
+                  .where("longitude < ?", params[:lngmax])
+    render json: towers.as_json, status: 200
   end
 end

@@ -11,6 +11,10 @@ class Api::TransmittersController < ApplicationController
   end
 
   def index
-    render json: Transmitter.all.as_json, status: 200
+    transmitters = Transmitter.where("latitude > ?", params[:latmin])
+                              .where("latitude < ?", params[:latmax])
+                              .where("longitude > ?", params[:lngmin])
+                              .where("longitude < ?", params[:lngmax])
+    render json: transmitters.as_json, status: 200
   end
 end

@@ -10,6 +10,8 @@ class AntennaSearchFetcher
   end
 
   def fetch!
+    return if SuccesfulDownload.where(lat: lat, lng: lng).exists?
+
     Capybara.javascript_driver = :webkit
     options = Selenium::WebDriver::Chrome::Options.new(args: ['headless'])
     driver = Selenium::WebDriver.for(:chrome, options: options)
@@ -18,37 +20,47 @@ class AntennaSearchFetcher
     puts "Loading #{url}..."
     driver.get(url)
 
-    tower_link = wait.until {
-      driver.find_element(:css, "a[href*='/downloads_ant_free/Towers'], a[href*='1/1/2001']")
-    }.attribute('href')
+    wait.until do
+      driver.find_element(
+        :css,
+        "a[href*='/downloads_ant_free/Towers'], a[href*='1/1/2001'], a[href*='downloads_ant_free/TransmittersNAU228666HXX869054.csv'], a[href*='/downloads_ant_free/Transmitters'], a[href*='62.4161846226896']"
+      )
+    end
 
-    transmitter_link = wait.until {
-      driver.find_element(:css, "a[href*='/downloads_ant_free/Transmitters'], a[href*='62.4161846226896']")
-    }.attribute('href')
+    tower_link = driver.find_elements(:css, "a[href*='/downloads_ant_free/Towers'], a[href*='1/1/2001'], a[href*='downloads_ant_free/TransmittersNAU228666HXX869054.csv']").first&.attribute('href')
+
+    transmitter_link = driver.find_elements(:css, "a[href*='/downloads_ant_free/Transmitters'], a[href*='62.4161846226896']").first&.attribute('href')
 
     if tower_link == "http://www.antennasearch.com/1/1/2001"
-      driver.quit
       return
     end
 
     sleep(1)
 
-    tower_download = open(tower_link)
-    transmitter_download = open(transmitter_link)
+    download_towers = tower_link.present? && tower_link.include?('downloads_ant_free/Towers')
+    download_transmitters = transmitter_link.include?('downloads_ant_free/Transmitters')
 
-    IO.copy_stream(tower_download, tower_link.split('/').last)
-    IO.copy_stream(transmitter_download, transmitter_link.split('/').last)
-
-    CSV.new(tower_download, headers: true).each do |tower|
-      Tower.create(tower.to_h.delete_if { |k, v| !k || k.empty? })
+    if download_towers
+      tower_download = open(tower_link)
+      IO.copy_stream(tower_download, tower_link.split('/').last)
+      tower_text = File.read(tower_link.split('/').last)
+      # CSV.parse(tower_text, :headers => true)
+      CSV.open(tower_link.split('/').last, 'r', headers: true).each do |tower|
+        Tower.create(tower.to_h.delete_if { |k, v| !k || k.empty? })
+      end
     end
 
-    CSV.new(transmitter_download, headers: true).each do |transmitter|
-      Transmitter.create(transmitter.to_h.delete_if { |k, v| !k || k.empty? })
+    if download_transmitters
+      transmitter_download = open(transmitter_link)
+      IO.copy_stream(transmitter_download, transmitter_link.split('/').last)
+      transmitter_text = File.read(transmitter_link.split('/').last)
+      # csv = CSV.parse(transmitter_text, :headers => true)
+      CSV.open(transmitter_link.split('/').last, 'r', headers: true).each do |transmitter|
+        Transmitter.create(transmitter.to_h.delete_if { |k, v| !k || k.empty? })
+      end
     end
 
-    driver.quit
-    SuccessfulDownload.create(url: url, lat: lat, lng: lng)
+    SuccesfulDownload.create(url: url, lat: lat, lng: lng, had_towers: download_towers, had_transmitters: download_transmitters)
 
   rescue Selenium::WebDriver::Error::TimeoutError, OpenURI::HTTPError
     link_element = begin
@@ -56,7 +68,8 @@ class AntennaSearchFetcher
     rescue Selenium::WebDriver::Error::NoSuchElementError
     end
     FailedDownload.create(url: url, lat: lat, lng: lng) unless link_element.present? # signifies on off-map location, so not an error
-    driver.quit
+  ensure
+    driver&.quit
   end
 
   def url

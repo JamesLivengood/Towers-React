@@ -81,3 +81,5 @@ end
 # gem 'Dhalang'
 # gem 'puppeteer', '~> 0.0.1'
 gem 'capybara-chrome'
+
+gem 'selenium-webdriver'

@@ -9,8 +9,22 @@ class AntennaSearchFetcher
   end
 
   def fetch!
-    uri = URI(url)
-    Net::HTTP.get(uri)
+    options = Selenium::WebDriver::Chrome::Options.new(args: ['headless'])
+    driver = Selenium::WebDriver.for(:chrome, options: options)
+
+    driver.get(url)
+
+    tower_link = wait.until do
+      driver.find_element(:css, "a[href*='/downloads_ant_free/Towers']")
+    end
+
+    transmitter_link = wait.until do
+      driver.find_element(:css, "a[href*='/downloads_ant_free/Towers']")
+    end
+
+
+
+    driver.quit
   end
 
   def url

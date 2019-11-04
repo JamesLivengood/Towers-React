@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import puppetteer from 'puppeteer';
 import axios from 'axios';
+// import antennaSearchDownloader from '../../Utils/antennaSearchDownloader';
 
 const Downloader: FC = (props) => {
   const [form, setForm] = React.useState({
@@ -22,16 +22,15 @@ const Downloader: FC = (props) => {
       `/api/antenna_search_urls`,
       { antenna_search_urls: form },
       { headers: { 'Content-Type': 'application/json' } }
-    ).then(res => console.log(res))
-      .then(res => console.log(res))
+    ).then(res => {
+        console.log(res, 'swag');
+        // antennaSearchDownloader();
+      })
+      .then(res => console.log(res, 'yolo'))
       .catch(error => {
         console.log(error);
       });
   }
-
-  // const download = () => {
-
-  // }
 
   return (
     <div>

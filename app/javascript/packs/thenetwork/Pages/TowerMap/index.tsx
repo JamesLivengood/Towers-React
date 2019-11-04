@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { fetchTowers, fetchTransmitters, fetchAntennaSearch } from '../../Utils/fetches';
-import axios from 'axios';
+import { fetchTowers, fetchTransmitters } from '../../Utils/fetches';
 
 const TowerMap = ({ google }) => {
   const [zoom, setZoom] = React.useState(11);

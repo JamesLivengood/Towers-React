@@ -1,4 +1,7 @@
 class AreaPopulator
+  RADIUS = 1.8
+  MOVE_DISTANCE = RADIUS * Math.sqrt(3)
+
   attr_reader :height, :width, :calculator, :fetcher, :lat, :lng
   def initialize(lat, lng, width, height, midway_starting_lat=nil, midway_starting_lng=nil)
     @height = height
@@ -12,8 +15,8 @@ class AreaPopulator
   def populate!
     urls = []
     original_lng = fetcher.lng
-    vertical_max = fetcher.lat + calculator.change_in_latitude(height + 1.8)
-    horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width + 1.8)
+    vertical_max = fetcher.lat + calculator.change_in_latitude(height + MOVE_DISTANCE)
+    horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width + MOVE_DISTANCE)
 
     # Set midway points if passed
     fetcher.lat = lat
@@ -24,10 +27,13 @@ class AreaPopulator
         urls << fetcher.url
         fetcher.fetch!
 
-        fetcher.move(:left, 1.8)
+        fetcher.move(:left, MOVE_DISTANCE)
       end
+
       fetcher.lng = original_lng
-      fetcher.move(:up, 1.8)
+      fetcher.move(:right, MOVE_DISTANCE / 2) if calculator.even_distance?(fetcher.lat, RADIUS)
+
+      fetcher.move(:up, MOVE_DISTANCE)
     end
 
     urls

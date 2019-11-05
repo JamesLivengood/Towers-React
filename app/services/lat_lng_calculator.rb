@@ -17,4 +17,13 @@ class LatLngCalculator
     r = EARTH_RADIUS*Math.cos(latitude*DEGREES_TO_RADIANS)
     return (miles/r)*RADIANS_TO_DEGREES
   end
+
+  def even_distance?(latitude, radius)
+    how_many_perfectly_fit_circles_from_equator?(latitude, radius).even?
+  end
+
+  def how_many_perfectly_fit_circles_from_equator?(latitude, radius)
+    divisor = change_in_latitude(Math.sqrt(3) * radius)
+    return (latitude / divisor).to_i
+  end
 end

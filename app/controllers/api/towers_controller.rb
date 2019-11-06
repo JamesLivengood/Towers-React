@@ -11,7 +11,8 @@ class Api::TowersController < ApplicationController
   end
 
   def index
-    towers = Tower.where("latitude > ?", params[:latmin])
+    towers = Tower#.all
+                  .where("latitude > ?", params[:latmin])
                   .where("latitude < ?", params[:latmax])
                   .where("longitude > ?", params[:lngmin])
                   .where("longitude < ?", params[:lngmax])

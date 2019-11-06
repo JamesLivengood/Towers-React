@@ -11,7 +11,8 @@ class Api::TransmittersController < ApplicationController
   end
 
   def index
-    transmitters = Transmitter.where("latitude > ?", params[:latmin])
+    transmitters = Transmitter#.all
+                              .where("latitude > ?", params[:latmin])
                               .where("latitude < ?", params[:latmax])
                               .where("longitude > ?", params[:lngmin])
                               .where("longitude < ?", params[:lngmax])

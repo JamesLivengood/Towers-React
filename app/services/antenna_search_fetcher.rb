@@ -15,7 +15,7 @@ class AntennaSearchFetcher
     Capybara.javascript_driver = :webkit
     options = Selenium::WebDriver::Chrome::Options.new(args: ['headless'])
     driver = Selenium::WebDriver.for(:chrome, options: options)
-    wait = Selenium::WebDriver::Wait.new
+    wait = Selenium::WebDriver::Wait.new(timeout: 100)
 
     puts "Loading #{url}..."
     driver.get(url)
@@ -62,10 +62,10 @@ class AntennaSearchFetcher
 
     SuccesfulDownload.create(url: url, lat: lat, lng: lng, had_towers: download_towers, had_transmitters: download_transmitters)
 
-  rescue Selenium::WebDriver::Error::TimeoutError, OpenURI::HTTPError
+  rescue Selenium::WebDriver::Error::TimeoutError, OpenURI::HTTPError, Net::ReadTimeout
     link_element = begin
       driver.find_element(:css, "a[href*='1/1/2001']")
-    rescue Selenium::WebDriver::Error::NoSuchElementError
+    rescue Selenium::WebDriver::Error::NoSuchElementError, Net::ReadTimeout
     end
     FailedDownload.create(url: url, lat: lat, lng: lng) unless link_element.present? # signifies on off-map location, so not an error
   ensure

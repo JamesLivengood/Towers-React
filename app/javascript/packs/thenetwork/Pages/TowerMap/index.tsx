@@ -49,9 +49,11 @@ const TowerMap = ({ google }) => {
         zoom={zoom}
         initialCenter={center}
         center={center}
-        onDragend={saveCenter}
+        onReady={onLoad}
+        // onDragend={saveCenter}
         style={{ height: '100%', width: '100%' }}
         onTilesloaded={fetchMarkers}
+        // onReady={fetchMarkers}
         id="map"
       >
         {
@@ -62,7 +64,7 @@ const TowerMap = ({ google }) => {
                 position={{ lat: tower.latitude, lng: tower.longitude }}
                 icon={{
                   url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-                  scaledSize: new google.maps.Size(32, 32)
+                  scaledSize: new google.maps.Size(15, 15)
                 }}
               />
             );
@@ -76,8 +78,7 @@ const TowerMap = ({ google }) => {
                 position={{ lat: t.latitude, lng: t.longitude }}
                 icon={{
                   url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                  scaledSize: new google.maps.Size(21, 21)
-                  // size: new google.maps.Size(25, 50)
+                  scaledSize: new google.maps.Size(11, 11)
                 }}
               />
             );

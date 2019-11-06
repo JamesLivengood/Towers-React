@@ -65,7 +65,7 @@ class AntennaSearchFetcher
   rescue Selenium::WebDriver::Error::TimeoutError, OpenURI::HTTPError, Net::ReadTimeout
     link_element = begin
       driver.find_element(:css, "a[href*='1/1/2001']")
-    rescue Selenium::WebDriver::Error::NoSuchElementError, Net::ReadTimeout
+    rescue Selenium::WebDriver::Error::NoSuchElementError, OpenURI::HTTPError, Net::ReadTimeout
     end
     FailedDownload.create(url: url, lat: lat, lng: lng) unless link_element.present? # signifies on off-map location, so not an error
   ensure

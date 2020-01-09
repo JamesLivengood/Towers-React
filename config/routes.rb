@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   namespace 'api', defaults: {format: :json} do
     resources :towers, only: [:create, :index]
     resources :transmitters, only: [:create, :index]
+    resources :succesful_downloads, only: [:index]
+    resources :failed_downloads, only: [:index]
     resources :antenna_search_urls, only: [:create]
   end
 

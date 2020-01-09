@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchTowers = (setTowers, bounds): void => {
   axios.get(
-    `/api/towers?latmin=${bounds.na.j}&latmax=${bounds.na.l}&lngmin=${bounds.ga.l}&lngmax=${bounds.ga.j}`
+    `/api/towers?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.h}&lngmax=${bounds.ka.g}`
   ).then(res => {
     setTowers(res.data);
   })
@@ -13,7 +13,7 @@ export const fetchTowers = (setTowers, bounds): void => {
 
 export const fetchTransmitters = (setTransmitters, bounds): void => {
   axios.get(
-    `/api/transmitters?latmin=${bounds.na.j}&latmax=${bounds.na.l}&lngmin=${bounds.ga.l}&lngmax=${bounds.ga.j}`
+    `/api/transmitters?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.h}&lngmax=${bounds.ka.g}`
   ).then(res => {
     setTransmitters(res.data);
   })
@@ -21,6 +21,28 @@ export const fetchTransmitters = (setTransmitters, bounds): void => {
     console.warn(error);
   });
 };
+
+export const fetchSuccesfulDownloads = (setSuccesfulDownloads, bounds): void => {
+  axios.get(
+    `/api/succesful_downloads?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.g}&lngmax=${bounds.ka.h}`
+  ).then(res => {
+    setSuccesfulDownloads(res.data);
+  })
+  .catch(error => {
+    console.warn(error);
+  });
+}
+
+export const fetchFailedDownloads = (setFailedDownloads, bounds): void => {
+  axios.get(
+    `/api/failed_downloads?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.g}&lngmax=${bounds.ka.h}`
+  ).then(res => {
+    setFailedDownloads(res.data);
+  })
+  .catch(error => {
+    console.warn(error);
+  });
+}
 
 export const fetchAntennaSearch = (): void => {
   axios.get(

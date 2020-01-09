@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { fetchTowers, fetchTransmitters } from '../../Utils/fetches';
+import { Map, InfoWindow, Marker, GoogleApiWrapper, Circle } from 'google-maps-react';
+import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDownloads } from '../../Utils/fetches';
+import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
 
-const TowerMap = ({ google }) => {
+const TowerMap = ({ google, downloads }) => {
   const [zoom, setZoom] = React.useState(() => {
     return localStorage.zoom ? parseFloat(localStorage.zoom) : 11
   });
@@ -11,12 +12,19 @@ const TowerMap = ({ google }) => {
   );
   const [towers, setTowers] = React.useState(() => []);
   const [transmitters, setTransmitters] = React.useState(() => []);
+  const [succesfulDownloads, setSuccesfulDownloads] = React.useState(() => []);
+  const [failedDownloads, setFailedDownloads] = React.useState(() => []);
   const [centerMarker, setCenterMarker] = React.useState(() => undefined)
   const [activeMarker, setActiveMarker] = React.useState(() => { return { marker: undefined, item: undefined } });
 
   const fetchMarkers = (mapProps, map): void => {
-    fetchTowers(setTowers, map.getBounds());
-    fetchTransmitters(setTransmitters, map.getBounds());
+    if (downloads) {
+      fetchSuccesfulDownloads(setSuccesfulDownloads, map.getBounds());
+      fetchFailedDownloads(setFailedDownloads, map.getBounds());
+    } else {
+      fetchTowers(setTowers, map.getBounds());
+      fetchTransmitters(setTransmitters, map.getBounds());
+    }
   }
 
   const saveCenterAndZoom = (mapProps, map): void => {
@@ -46,33 +54,6 @@ const TowerMap = ({ google }) => {
 
   const openMarker = (props, marker, e) => {
     setActiveMarker({ marker, item: marker.item });
-  }
-
-  const towerInfo = (tower) => {
-    return {
-      tower_type: tower.tower_type,
-      date_constructed: tower.date_constructed,
-      height_of_structure: tower.height_of_structure,
-      ground_elevation: tower.ground_elevation,
-      overall_height_above_ground: tower.overall_height_above_ground,
-      overall_height_amsl: tower.overall_height_amsl,
-      structure_type: tower.structure_type
-    }
-  }
-
-  const transmitterInfo = (transmitter) => {
-    return {
-      sitetype: transmitter.sitetype,
-      ground_elevation: transmitter.ground_elevation,
-      height_of_support_structure: transmitter.height_of_support_structure,
-      overall_height_of_structure: transmitter.overall_height_of_structure,
-      structure_type: transmitter.structure_type,
-      emmitter_1_freqs_mhz: transmitter.emmitter_1_freqs_mhz,
-      emmitter_2_freqs_mhz: transmitter.emmitter_2_freqs_mhz,
-      emmitter_3_freqs_mhz: transmitter.emmitter_3_freqs_mhz,
-      emmitter_4_freqs_mhz: transmitter.emmitter_4_freqs_mhz,
-      emmitter_5_freqs_mhz: transmitter.emmitter_5_freqs_mhz
-    }
   }
 
   return (
@@ -122,6 +103,42 @@ const TowerMap = ({ google }) => {
                 }}
                 onClick={openMarker}
                 item={transmitterInfo(t)}
+              />
+            );
+          })
+        }
+        {
+          succesfulDownloads.map((sd, idx) => {
+            return (
+              <Marker
+                key={idx}
+                position={{ lat: sd.lat, lng: sd.lng }}
+                icon = {{
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 108, // 1 mi
+                  // scale: 23, // 5 mi
+                  fillColor: "#F00",
+                  fillOpacity: 0.3,
+                  strokeWeight: 0.1
+                }}
+              />
+            );
+          })
+        }
+        {
+          failedDownloads.map((fd, idx) => {
+            return (
+              <Marker
+                key={idx}
+                position={{ lat: fd.lat, lng: fd.lng }}
+                icon = {{
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 108, // 1 mi
+                  // scale: 23, // 5 mi
+                  fillColor: "#0000ff",
+                  fillOpacity: 0.3,
+                  strokeWeight: 0.1
+                }}
               />
             );
           })

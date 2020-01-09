@@ -1,15 +1,31 @@
 import axios from 'axios';
-export var fetchTowers = function (setTowers) {
-    axios.get("/api/towers").then(function (res) {
+export var fetchTowers = function (setTowers, bounds) {
+    axios.get("/api/towers?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.h + "&lngmax=" + bounds.ka.g).then(function (res) {
         setTowers(res.data);
     })
         .catch(function (error) {
         console.warn(error);
     });
 };
-export var fetchTransmitters = function (setTransmitters) {
-    axios.get("/api/transmitters").then(function (res) {
+export var fetchTransmitters = function (setTransmitters, bounds) {
+    axios.get("/api/transmitters?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.h + "&lngmax=" + bounds.ka.g).then(function (res) {
         setTransmitters(res.data);
+    })
+        .catch(function (error) {
+        console.warn(error);
+    });
+};
+export var fetchSuccesfulDownloads = function (setSuccesfulDownloads, bounds) {
+    axios.get("/api/succesful_downloads?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.g + "&lngmax=" + bounds.ka.h).then(function (res) {
+        setSuccesfulDownloads(res.data);
+    })
+        .catch(function (error) {
+        console.warn(error);
+    });
+};
+export var fetchFailedDownloads = function (setFailedDownloads, bounds) {
+    axios.get("/api/failed_downloads?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.g + "&lngmax=" + bounds.ka.h).then(function (res) {
+        setFailedDownloads(res.data);
     })
         .catch(function (error) {
         console.warn(error);

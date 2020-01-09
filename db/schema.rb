@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_233633) do
+ActiveRecord::Schema.define(version: 2020_01_07_225112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2019_11_05_233633) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "marked_ignore"
+    t.string "error"
+    t.integer "reran_count"
   end
 
   create_table "succesful_downloads", force: :cascade do |t|

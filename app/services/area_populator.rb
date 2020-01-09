@@ -1,6 +1,7 @@
 class AreaPopulator
   RADIUS = 1.8
   MOVE_DISTANCE = RADIUS * Math.sqrt(3)
+  MAINLAND_AMERICA_WEST_MAX = -124.587129
 
   attr_reader :height, :width, :calculator, :fetcher, :lat, :lng
   def initialize(lat, lng, width, height, midway_starting_lat=nil, midway_starting_lng=nil)
@@ -23,7 +24,7 @@ class AreaPopulator
     fetcher.lng = lng
 
     until fetcher.lat > vertical_max
-      until fetcher.lng < horizontal_max
+      until fetcher.lng < horizontal_max || fetcher.lng < MAINLAND_AMERICA_WEST_MAX
         urls << fetcher.url
         fetcher.fetch!
 
@@ -37,5 +38,7 @@ class AreaPopulator
     end
 
     urls
+  ensure
+    fetcher.driver&.quit
   end
 end

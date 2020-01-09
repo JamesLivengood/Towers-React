@@ -15,6 +15,7 @@ const RoutesContainer = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={TowerMap} />
+          <Route exact path="/downloads-map" render={(props) => <TowerMap downloads={true}/>}/>
           <Route exact path="/uploads" component={Homepage} />
           <Route exact path="/downloader" component={Downloader}/>
         </Switch>

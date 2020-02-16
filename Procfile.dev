@@ -1,1 +1,2 @@
-api: PORT=3001 bundle exec rails s
+web: bundle exec puma -p 3000
+webpack: bin/webpack-dev-server

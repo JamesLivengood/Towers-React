@@ -35,7 +35,7 @@
     "node": "10.15.3"
   },
   "scripts": {
-    "start": "node src/server.js",
+    "start": "ruby ./bin/webpack-dev-server",
     "tsc": "tsc",
     "postinstall": "npm run tsc"
   },

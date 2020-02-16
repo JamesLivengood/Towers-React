@@ -1,2 +1,2 @@
-web: bundle exec puma
-worker: bundle exec sidekiq -t 25
+web: bundle exec rails server
+webpack: ruby ./bin/webpack-dev-server

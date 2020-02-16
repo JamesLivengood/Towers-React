@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_225112) do
+ActiveRecord::Schema.define(version: 2020_01_18_015322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_225112) do
     t.boolean "marked_ignore"
     t.string "error"
     t.integer "reran_count"
+    t.boolean "reran_successfully"
   end
 
   create_table "succesful_downloads", force: :cascade do |t|
@@ -64,6 +65,8 @@ ActiveRecord::Schema.define(version: 2020_01_07_225112) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "had_towers"
     t.boolean "had_transmitters"
+    t.string "tower_filename"
+    t.string "transmitter_filename"
   end
 
   create_table "towers", force: :cascade do |t|

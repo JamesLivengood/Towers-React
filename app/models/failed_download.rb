@@ -1,4 +1,6 @@
 class FailedDownload < ApplicationRecord
+  scope :still_failed, -> { where(reran_successfully: nil) }
+
   validate :ensure_unique
 
   def ensure_unique

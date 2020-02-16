@@ -115,8 +115,8 @@ const TowerMap = ({ google, downloads }) => {
                 position={{ lat: sd.lat, lng: sd.lng }}
                 icon = {{
                   path: google.maps.SymbolPath.CIRCLE,
-                  scale: 108, // 1 mi
-                  // scale: 23, // 5 mi
+                  // scale: 108, // 1 mi
+                  scale: 23, // 5 mi
                   fillColor: "#F00",
                   fillOpacity: 0.3,
                   strokeWeight: 0.1
@@ -133,8 +133,8 @@ const TowerMap = ({ google, downloads }) => {
                 position={{ lat: fd.lat, lng: fd.lng }}
                 icon = {{
                   path: google.maps.SymbolPath.CIRCLE,
-                  scale: 108, // 1 mi
-                  // scale: 23, // 5 mi
+                  // scale: 108, // 1 mi
+                  scale: 23, // 5 mi
                   fillColor: "#0000ff",
                   fillOpacity: 0.3,
                   strokeWeight: 0.1

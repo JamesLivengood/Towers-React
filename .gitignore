@@ -32,4 +32,7 @@ yarn-debug.log*
 
 # spreadsheet downloads
 /towers
+/towers_processed
 /transmitters
+/transmitters_processed
+/failed_sheets

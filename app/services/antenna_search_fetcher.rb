@@ -17,6 +17,8 @@ class AntennaSearchFetcher
     return if SuccesfulDownload.where(lat: lat, lng: lng).exists?
 
     puts "Loading #{url}..."
+    puts "#{lat}, #{lng}"
+    sleep(1)
     driver.get(url)
 
     wait.until do
@@ -63,7 +65,13 @@ class AntennaSearchFetcher
       # end
     end
 
-    SuccesfulDownload.create(url: url, lat: lat, lng: lng, had_towers: download_towers, had_transmitters: download_transmitters)
+    SuccesfulDownload.create(
+      url: url, 
+      lat: lat, 
+      lng: lng, 
+      had_towers: download_towers, 
+      had_transmitters: download_transmitters
+    )
 
   rescue Selenium::WebDriver::Error::TimeoutError, OpenURI::HTTPError, Net::ReadTimeout, Net::OpenTimeout, Errno::ETIMEDOUT => error
     link_element = begin

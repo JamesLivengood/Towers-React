@@ -70,8 +70,8 @@ var TowerMap = function (_a) {
             succesfulDownloads.map(function (sd, idx) {
                 return (React.createElement(Marker, { key: idx, position: { lat: sd.lat, lng: sd.lng }, icon: {
                         path: google.maps.SymbolPath.CIRCLE,
-                        scale: 108,
-                        // scale: 23, // 5 mi
+                        // scale: 108, // 1 mi
+                        scale: 23,
                         fillColor: "#F00",
                         fillOpacity: 0.3,
                         strokeWeight: 0.1
@@ -80,8 +80,8 @@ var TowerMap = function (_a) {
             failedDownloads.map(function (fd, idx) {
                 return (React.createElement(Marker, { key: idx, position: { lat: fd.lat, lng: fd.lng }, icon: {
                         path: google.maps.SymbolPath.CIRCLE,
-                        scale: 108,
-                        // scale: 23, // 5 mi
+                        // scale: 108, // 1 mi
+                        scale: 23,
                         fillColor: "#0000ff",
                         fillOpacity: 0.3,
                         strokeWeight: 0.1

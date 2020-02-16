@@ -1,7 +1,8 @@
+require 'fileutils'
 class FolderFileUploader
   attr_reader :dir_name
 
-  def initialize(dir_name)
+  def initialize(dir_name ='towers/')
     @dir_name = dir_name
   end
 
@@ -11,13 +12,16 @@ class FolderFileUploader
       @filename = filename
       if filename.include? "Tower"
         save_towers!(filename)
+        FileUtils.mv(dir_name + filename, "towers_processed/#{filename}")
       else 
         save_transmitters!(filename)
-      end 
+        FileUtils.mv(dir_name + filename, "transmitters_processed/#{filename}")
+      end
+      # SuccesfulDownload.where(tower_filename)
+    rescue => e
+      FileUtils.mv(dir_name + @filename, "failed_sheets/#{@filename}")
+      # raise e
     end
-  rescue => e
-    puts @filename
-    raise e
   end
 
   private

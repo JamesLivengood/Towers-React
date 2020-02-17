@@ -38,3 +38,4 @@ yarn-debug.log*
 /failed_sheets
 
 backup.sql
+mydb2.sql

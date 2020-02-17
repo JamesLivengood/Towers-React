@@ -36,3 +36,5 @@ yarn-debug.log*
 /transmitters
 /transmitters_processed
 /failed_sheets
+
+backup.sql

@@ -17,7 +17,5 @@ class Api::TowersController < ApplicationController
                   .where("longitude > ?", params[:lngmin])
                   .where("longitude < ?", params[:lngmax])
     render json: towers.as_json, status: 200
-  rescue => error 
-    render json: { error: error.inspect }, status: 500
   end
 end

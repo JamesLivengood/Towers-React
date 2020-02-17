@@ -1,2 +1,2 @@
-api: PORT=3000 bundle exec rails s
-web: ruby ./bin/webpack-dev-server
+web: bundle exec rails server
+webpack: ruby ./bin/webpack-dev-server

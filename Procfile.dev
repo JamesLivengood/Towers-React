@@ -1,2 +1,2 @@
-web: bundle exec rails server
-webpack: ruby ./bin/webpack-dev-server
+web: bundle exec puma
+worker: ruby ./bin/webpack-dev-server

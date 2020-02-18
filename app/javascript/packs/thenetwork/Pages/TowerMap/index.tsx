@@ -3,6 +3,8 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper, Circle } from 'google-maps-r
 import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDownloads } from '../../Utils/fetches';
 import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
 import Key from '../../Common/Components/Key';
+import { mapIcons } from 'map-icons';
+
 
 const TowerMap = ({ google, downloads }) => {
   const [zoom, setZoom] = React.useState(() => {
@@ -17,6 +19,7 @@ const TowerMap = ({ google, downloads }) => {
   const [failedDownloads, setFailedDownloads] = React.useState(() => []);
   const [centerMarker, setCenterMarker] = React.useState(() => undefined)
   const [activeMarker, setActiveMarker] = React.useState(() => { return { marker: undefined, item: undefined } });
+    // console.log(mapIcons);
 
   const fetchMarkers = (mapProps, map): void => {
     if (downloads) {
@@ -149,8 +152,9 @@ const TowerMap = ({ google, downloads }) => {
             key="centerMarker"
             position={{ lat: centerMarker.lat, lng: centerMarker.lng }}
             icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
-              scaledSize: new google.maps.Size(27, 27)
+              url: "https://www.freeiconspng.com/uploads/person-icon-user-person-man-icon-4.png",
+              // url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
+              scaledSize: new google.maps.Size(42, 42)
             }}
           /> : undefined
         }

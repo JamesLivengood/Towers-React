@@ -16,3 +16,56 @@
 body {
   margin: 0px;
 }
+
+.key {
+  // width: 120px;
+  // height: 150px;
+  position: absolute;
+  background-color: white;
+  bottom: 0px;
+  margin: 10px;
+
+  background-color: rgb(255, 255, 255);
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  background-clip: padding-box;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  font-family: Roboto, Arial, sans-serif;
+  padding: 13px;
+  font-size: 13px;
+}
+
+.h-20x {
+  height: 20px
+}
+
+.mb-10x {
+  margin-bottom: 10px;
+}
+
+.mr-3x {
+  margin-right: 3px;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.x {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: darkgrey;
+}
+
+.x:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

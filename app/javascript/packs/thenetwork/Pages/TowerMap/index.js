@@ -2,6 +2,7 @@ import React from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDownloads } from '../../Utils/fetches';
 import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
+import Key from '../../Common/Components/Key';
 var TowerMap = function (_a) {
     var google = _a.google, downloads = _a.downloads;
     var _b = React.useState(function () {
@@ -100,7 +101,8 @@ var TowerMap = function (_a) {
                             key,
                             ": ",
                             activeMarker.item[key]);
-                    }) : undefined)))));
+                    }) : undefined))),
+        React.createElement(Key, null)));
 };
 export default GoogleApiWrapper({
     apiKey: ('AIzaSyAehp1zTFrN3DtQJG2dgduMe8y3Jcbe6r4')

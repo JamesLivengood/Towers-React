@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper, Circle } from 'google-maps-react';
 import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDownloads } from '../../Utils/fetches';
 import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
+import Key from '../../Common/Components/Key';
 
 const TowerMap = ({ google, downloads }) => {
   const [zoom, setZoom] = React.useState(() => {
@@ -165,6 +166,7 @@ const TowerMap = ({ google, downloads }) => {
           </ul>
         </InfoWindow>
       </Map>
+      <Key />
     </div>
   );
 };

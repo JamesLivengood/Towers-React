@@ -152,9 +152,10 @@ const TowerMap = ({ google, downloads }) => {
             key="centerMarker"
             position={{ lat: centerMarker.lat, lng: centerMarker.lng }}
             icon={{
-              url: "https://www.freeiconspng.com/uploads/person-icon-user-person-man-icon-4.png",
-              // url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
-              scaledSize: new google.maps.Size(42, 42)
+              // url: "https://www.freeiconspng.com/uploads/person-icon-user-person-man-icon-4.png",
+              // url: "https://1001freedownloads.s3.amazonaws.com/vector/thumb/74889/1367934593.png",
+              url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+              scaledSize: new google.maps.Size(31, 31)
             }}
           /> : undefined
         }

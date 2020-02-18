@@ -21,9 +21,15 @@ const Key = () => {
         <span>Single Antenna</span>
       </div>
 
-      <div className="flex align-center">
+      <div className="mb-10x flex align-center">
         <img className="h-20x mr-3x" src="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" />
         <span>Multiple Antennas</span>
+      </div>
+
+      <div className="flex align-center">
+        <img className="h-20x mr-3x" src="http://maps.google.com/mapfiles/ms/icons/green-dot.png" />
+        {/* <img className="h-20x mr-3x" src="https://www.freeiconspng.com/uploads/person-icon-user-person-man-icon-4.png" /> */}
+        <span>Searched Location</span>
       </div>
 
     </span>

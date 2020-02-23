@@ -14,8 +14,9 @@ class Api::TowersController < ApplicationController
     towers = Tower#.all
                   .where("latitude > ?", params[:latmin])
                   .where("latitude < ?", params[:latmax])
-                  .where("longitude > ?", params[:lngmin])
-                  .where("longitude < ?", params[:lngmax])
+                  .where("longitude < ?", params[:lngmin])
+                  .where("longitude > ?", params[:lngmax])
+                  # lng reversed because SQL issue with these numbers being negative number strings
     render json: towers.as_json, status: 200
   end
 end

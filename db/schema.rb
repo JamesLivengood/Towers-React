@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_18_015322) do
+ActiveRecord::Schema.define(version: 2020_02_23_154507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 2020_01_18_015322) do
     t.string "hist3_addnl"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "lat_float"
+    t.float "lng_float"
     t.index ["latitude"], name: "index_towers_on_latitude"
     t.index ["longitude"], name: "index_towers_on_longitude"
   end
@@ -172,6 +174,8 @@ ActiveRecord::Schema.define(version: 2020_01_18_015322) do
     t.string "emmitter_5_freqs_mhz"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "lat_float"
+    t.float "lng_float"
     t.index ["latitude"], name: "index_transmitters_on_latitude"
     t.index ["longitude"], name: "index_transmitters_on_longitude"
   end

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchTowers = (setTowers, bounds): void => {
   axios.get(
-    `/api/towers?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.h}&lngmax=${bounds.ka.g}`
+    `/api/towers?latmin=${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`
   ).then(res => {
     setTowers(res.data);
   })
@@ -13,7 +13,7 @@ export const fetchTowers = (setTowers, bounds): void => {
 
 export const fetchTransmitters = (setTransmitters, bounds): void => {
   axios.get(
-    `/api/transmitters?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.h}&lngmax=${bounds.ka.g}`
+    `/api/transmitters?latmin=${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`
   ).then(res => {
     setTransmitters(res.data);
   })
@@ -24,7 +24,7 @@ export const fetchTransmitters = (setTransmitters, bounds): void => {
 
 export const fetchSuccesfulDownloads = (setSuccesfulDownloads, bounds): void => {
   axios.get(
-    `/api/succesful_downloads?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.g}&lngmax=${bounds.ka.h}`
+    `/api/succesful_downloads?latmin=${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`
   ).then(res => {
     setSuccesfulDownloads(res.data);
   })
@@ -35,7 +35,7 @@ export const fetchSuccesfulDownloads = (setSuccesfulDownloads, bounds): void => 
 
 export const fetchFailedDownloads = (setFailedDownloads, bounds): void => {
   axios.get(
-    `/api/failed_downloads?latmin=${bounds.pa.g}&latmax=${bounds.pa.h}&lngmin=${bounds.ka.g}&lngmax=${bounds.ka.h}`
+    `/api/failed_downloads?latmin=${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`
   ).then(res => {
     setFailedDownloads(res.data);
   })

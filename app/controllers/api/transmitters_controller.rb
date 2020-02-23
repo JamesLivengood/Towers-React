@@ -18,7 +18,6 @@ class Api::TransmittersController < ApplicationController
                               .where("latitude < ?", params[:latmax])
                               .where("longitude < ?", params[:lngmin])
                               .where("longitude > ?", params[:lngmax])
-                              debugger
                               # lng reversed because SQL issue with these numbers being negative number strings
     render json: transmitters.as_json, status: 200
   end

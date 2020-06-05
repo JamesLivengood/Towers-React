@@ -1,6 +1,3 @@
 class PagesController < ActionController::Base
-    layout 'towers'
-    def homepage
-
-    end
+  layout 'towers'
 end

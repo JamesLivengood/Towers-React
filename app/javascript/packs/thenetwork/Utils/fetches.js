@@ -1,6 +1,10 @@
 import axios from 'axios';
+var fetchParams = function (bounds) {
+    return bounds.getSouthWest().lat() + "&latmax=" + bounds.getNorthEast().lat() + "&lngmin=" + bounds.getSouthWest().lng() + "&lngmax=" + bounds.getNorthEast().lng();
+};
 export var fetchTowers = function (setTowers, bounds) {
-    axios.get("/api/towers?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.h + "&lngmax=" + bounds.ka.g).then(function (res) {
+    axios.get("/api/towers?latmin=" + fetchParams(bounds)).then(function (res) {
+        console.log('Towers count: ', res.data.length);
         setTowers(res.data);
     })
         .catch(function (error) {
@@ -8,7 +12,8 @@ export var fetchTowers = function (setTowers, bounds) {
     });
 };
 export var fetchTransmitters = function (setTransmitters, bounds) {
-    axios.get("/api/transmitters?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.h + "&lngmax=" + bounds.ka.g).then(function (res) {
+    axios.get("/api/transmitters?latmin=" + fetchParams(bounds)).then(function (res) {
+        console.log('Transmitters count: ', res.data.length);
         setTransmitters(res.data);
     })
         .catch(function (error) {
@@ -16,7 +21,7 @@ export var fetchTransmitters = function (setTransmitters, bounds) {
     });
 };
 export var fetchSuccesfulDownloads = function (setSuccesfulDownloads, bounds) {
-    axios.get("/api/succesful_downloads?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.g + "&lngmax=" + bounds.ka.h).then(function (res) {
+    axios.get("/api/succesful_downloads?latmin=" + fetchParams(bounds)).then(function (res) {
         setSuccesfulDownloads(res.data);
     })
         .catch(function (error) {
@@ -24,7 +29,7 @@ export var fetchSuccesfulDownloads = function (setSuccesfulDownloads, bounds) {
     });
 };
 export var fetchFailedDownloads = function (setFailedDownloads, bounds) {
-    axios.get("/api/failed_downloads?latmin=" + bounds.pa.g + "&latmax=" + bounds.pa.h + "&lngmin=" + bounds.ka.g + "&lngmax=" + bounds.ka.h).then(function (res) {
+    axios.get("/api/failed_downloads?latmin=" + fetchParams(bounds)).then(function (res) {
         setFailedDownloads(res.data);
     })
         .catch(function (error) {

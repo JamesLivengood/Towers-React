@@ -6,7 +6,6 @@ var SearchBox = function (_a) {
         var m_map = document.getElementById('map');
         var searchBox = new google.maps.places.SearchBox(input);
         searchBox.addListener('places_changed', function () {
-            console.log('places changed !!');
             var places = searchBox.getPlaces();
             var location = places[0].geometry.location;
             setCenter({ lat: location.lat(), lng: location.lng() });

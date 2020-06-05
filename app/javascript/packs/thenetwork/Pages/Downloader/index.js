@@ -24,12 +24,7 @@ var Downloader = function (props) {
         });
     };
     var handleSubmit = function () {
-        axios.post("/api/antenna_search_urls", { antenna_search_urls: form }, { headers: { 'Content-Type': 'application/json' } }).then(function (res) {
-            console.log(res, 'swag');
-            // antennaSearchDownloader();
-        })
-            .then(function (res) { return console.log(res, 'yolo'); })
-            .catch(function (error) {
+        axios.post("/api/antenna_search_urls", { antenna_search_urls: form }, { headers: { 'Content-Type': 'application/json' } }).catch(function (error) {
             console.log(error);
         });
     };

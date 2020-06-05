@@ -21,7 +21,6 @@ export const fetchTransmitters = (setTransmitters, bounds): void => {
     `/api/transmitters?latmin=${fetchParams(bounds)}`
   ).then(res => {
     console.log('Transmitters count: ', res.data.length);
-    console.log(res)
     setTransmitters(res.data);
   })
   .catch(error => {

@@ -19,9 +19,7 @@ const SpreadsheetUploader: FC<IProps> = (props) => {
       `/api/${paramKey}`,
       { [paramKey]: parseData(data.data) },
       { headers: { 'Content-Type': 'application/json' } }
-    ).then(res => console.log(res))
-     .then(res => console.log(res))
-     .catch(error =>{
+    ).catch(error =>{
        console.log(error);
      });
   }

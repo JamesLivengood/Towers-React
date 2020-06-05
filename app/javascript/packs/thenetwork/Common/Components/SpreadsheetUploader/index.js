@@ -9,9 +9,7 @@ var SpreadsheetUploader = function (props) {
         var _a;
         setData(data.data);
         var paramKey = data.data[0].includes('sitetype') ? 'transmitters' : 'towers';
-        axios.post("/api/" + paramKey, (_a = {}, _a[paramKey] = parseData(data.data), _a), { headers: { 'Content-Type': 'application/json' } }).then(function (res) { return console.log(res); })
-            .then(function (res) { return console.log(res); })
-            .catch(function (error) {
+        axios.post("/api/" + paramKey, (_a = {}, _a[paramKey] = parseData(data.data), _a), { headers: { 'Content-Type': 'application/json' } }).catch(function (error) {
             console.log(error);
         });
     };

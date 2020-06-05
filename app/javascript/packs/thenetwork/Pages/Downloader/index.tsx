@@ -22,12 +22,7 @@ const Downloader: FC = (props) => {
       `/api/antenna_search_urls`,
       { antenna_search_urls: form },
       { headers: { 'Content-Type': 'application/json' } }
-    ).then(res => {
-        console.log(res, 'swag');
-        // antennaSearchDownloader();
-      })
-      .then(res => console.log(res, 'yolo'))
-      .catch(error => {
+    ).catch(error => {
         console.log(error);
       });
   }

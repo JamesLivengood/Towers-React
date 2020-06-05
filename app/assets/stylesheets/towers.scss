@@ -18,8 +18,6 @@ body {
 }
 
 .key {
-  // width: 120px;
-  // height: 150px;
   position: absolute;
   background-color: white;
   bottom: 0px;
@@ -55,6 +53,10 @@ body {
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .x {
   position: absolute;
   top: 5px;
@@ -68,4 +70,27 @@ body {
 
 .hidden {
   display: none;
+}
+
+// Marker size adjusters
+.marker-size-adjuster {
+  cursor: pointer;
+  display: flex;
+}
+
+.round-left {
+  border: 1px solid black;
+  border-radius: 50px 0 0 50px;
+  padding: 5px 10px 5px 12px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 1px rgba(255,255,255,0.1);
+}
+
+.round-right {
+  // Skipping left border
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+
+  border-radius: 0 50px 50px 0;
+  padding: 5px 12px 5px 10px;
 }

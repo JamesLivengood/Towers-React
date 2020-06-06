@@ -35,7 +35,8 @@ export class Marker extends React.Component {
   componentDidMount() {
     if (this.props.finalElement) {
       // Hide loading icon
-      document.getElementsByClassName("sk-folding-cube")[0].classList.add("hidden");
+      document.getElementsByClassName("loading-widget")[0].classList.add("hidden");
+      document.getElementsByClassName("page-slow-popup")[0].classList.add("hidden");
     }
     this.markerPromise = wrappedPromise();
     this.renderMarker();

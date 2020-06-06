@@ -24,7 +24,7 @@ const TowerMap = ({ google, downloads }) => {
 
   const fetchMarkers = (mapProps, map): void => {
     // Display loading icon
-    document.getElementsByClassName("sk-folding-cube")[0].classList.remove("hidden");
+    document.getElementsByClassName("loading-widget")[0].classList.remove("hidden");
     console.log("DABBY");
     if (downloads) {
       fetchSuccesfulDownloads(setSuccesfulDownloads, map.getBounds());

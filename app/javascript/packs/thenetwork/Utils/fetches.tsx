@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const fetchParams = (bounds): String => {
-  return `${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`;
+  return `latmin=${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`;
 }
 
 export const fetchTowers = (setTowers, bounds): void => {
   axios.get(
-    `/api/towers?latmin=${fetchParams(bounds)}`
+    `/api/towers?${fetchParams(bounds)}`
   ).then(res => {
     console.log('Towers count: ', res.data.length);
     setTowers(res.data);
@@ -18,7 +18,7 @@ export const fetchTowers = (setTowers, bounds): void => {
 
 export const fetchTransmitters = (setTransmitters, bounds): void => {
   axios.get(
-    `/api/transmitters?latmin=${fetchParams(bounds)}`
+    `/api/transmitters?${fetchParams(bounds)}`
   ).then(res => {
     console.log('Transmitters count: ', res.data.length);
     setTransmitters(res.data);
@@ -30,7 +30,7 @@ export const fetchTransmitters = (setTransmitters, bounds): void => {
 
 export const fetchSuccesfulDownloads = (setSuccesfulDownloads, bounds): void => {
   axios.get(
-    `/api/succesful_downloads?latmin=${fetchParams(bounds)}`
+    `/api/succesful_downloads?${fetchParams(bounds)}`
   ).then(res => {
     setSuccesfulDownloads(res.data);
   })
@@ -41,7 +41,7 @@ export const fetchSuccesfulDownloads = (setSuccesfulDownloads, bounds): void => 
 
 export const fetchFailedDownloads = (setFailedDownloads, bounds): void => {
   axios.get(
-    `/api/failed_downloads?latmin=${fetchParams(bounds)}`
+    `/api/failed_downloads?${fetchParams(bounds)}`
   ).then(res => {
     setFailedDownloads(res.data);
   })

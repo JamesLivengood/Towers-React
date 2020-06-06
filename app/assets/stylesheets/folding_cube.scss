@@ -93,3 +93,17 @@
     opacity: 0;
   }
 }
+
+.page-slow-popup {
+  position: absolute;
+  background: grey;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  opacity: 0.9;
+  bottom: calc(50% - 24px);
+  width: 200px;
+  font-size: 12px;
+  right: 0px;
+  margin: 0px;
+}

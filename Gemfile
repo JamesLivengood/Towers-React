@@ -85,3 +85,5 @@ gem 'capybara-chrome'
 
 gem 'selenium-webdriver'
 gem 'csv'
+gem 'browser'
+gem 'geocoder'

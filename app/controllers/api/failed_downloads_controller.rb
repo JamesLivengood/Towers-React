@@ -1,5 +1,5 @@
-class Api::FailedDownloadsController < ApplicationController
- 
+class Api::FailedDownloadsController < Api::ApplicationController
+
     def index
       failed_downloads = FailedDownload.where("lat > ?", params[:latmin])
                                        .where("lat < ?", params[:latmax])
@@ -8,4 +8,3 @@ class Api::FailedDownloadsController < ApplicationController
       render json: failed_downloads.as_json, status: 200
     end
   end
-  

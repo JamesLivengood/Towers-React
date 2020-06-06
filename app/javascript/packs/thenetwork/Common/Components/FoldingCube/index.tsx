@@ -4,7 +4,7 @@ const FoldingCube = ({ displayFoldingCube }: { displayFoldingCube: boolean }) =>
   useEffect(() => {
     const timer = setTimeout(() => {
       document.getElementsByClassName("page-slow-popup")[0].classList.remove("hidden");
-    }, 5000);
+    }, 10000);
     return () => clearTimeout(timer);
   }, []);
 

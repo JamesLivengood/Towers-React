@@ -67,6 +67,7 @@ GEM
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     brakeman (4.6.1)
+    browser (4.2.0)
     builder (3.2.3)
     byebug (11.0.1)
     cane (3.0.0)
@@ -98,6 +99,7 @@ GEM
     declarative-option (0.1.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    device_detector (1.0.3)
     diff-lcs (1.3)
     docile (1.3.2)
     equalizer (0.0.11)
@@ -123,6 +125,7 @@ GEM
       ruby_parser (~> 3.1, > 3.1.0)
       sexp_processor (~> 4.8)
     foreman (0.86.0)
+    geocoder (1.6.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.32.1)
@@ -365,14 +368,17 @@ DEPENDENCIES
   addressable
   bootsnap (>= 1.4.2)
   brakeman
+  browser
   byebug
   cane
   capybara-chrome
   csv
   database_cleaner
+  device_detector
   factory_bot_rails
   faker
   foreman
+  geocoder
   google-api-client
   graphiql-rails
   graphql

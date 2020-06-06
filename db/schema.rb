@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_23_154507) do
+ActiveRecord::Schema.define(version: 2020_06_06_170641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 2020_02_23_154507) do
     t.string "error"
     t.integer "reran_count"
     t.boolean "reran_successfully"
+  end
+
+  create_table "site_visits", force: :cascade do |t|
+    t.string "ip_address"
+    t.string "user_agent"
+    t.string "params"
+    t.string "browser_string"
+    t.jsonb "geo_data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "succesful_downloads", force: :cascade do |t|

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const Key = ({ adjustMarkerSizeMultiplier }) => {
+  const [hide, setHide] = React.useState(() => localStorage.hideKey || false);
   const hideKey = () => {
     document.getElementsByClassName("key")[0].classList.add("hidden");
   }

@@ -1,4 +1,4 @@
-class Api::TransmittersController < ApplicationController
+class Api::TransmittersController < Api::ApplicationController
   def create
     transmitters_params = params[:transmitters]
     errors = []

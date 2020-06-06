@@ -1,4 +1,4 @@
-class Api::TowersController < ApplicationController
+class Api::TowersController < Api::ApplicationController
   def create
     towers_params = params[:towers]
     errors = []

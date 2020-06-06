@@ -1,4 +1,4 @@
-class Api::AntennaSearchUrlsController < ApplicationController
+class Api::AntennaSearchUrlsController < Api::ApplicationController
   def create
     urls = AreaPopulator.new(
       url_params[:lat].to_i, url_params[:lng].to_i, url_params[:width].to_i, url_params[:height].to_i

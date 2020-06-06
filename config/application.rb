@@ -31,7 +31,7 @@ module Thenetwork
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    config.hosts << "network.nickoneill.com"
+    config.hosts << "usa-tower-map.herokuapp.com"
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'http://localhost:3000', 'https://towers-n-transmitters.herokuapp.com/' #replace this url with that of your own heroku client app

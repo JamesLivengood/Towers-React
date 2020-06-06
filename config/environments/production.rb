@@ -112,4 +112,5 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   config.hosts << "towers-n-transmitters.herokuapp.com"
+  config.hosts << "usa-tower-map.herokuapp.com"
 end

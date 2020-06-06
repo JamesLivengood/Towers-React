@@ -117,10 +117,20 @@ export class Marker extends React.Component {
 
 Marker.propTypes = {
   position: PropTypes.object,
-  map: PropTypes.object
+  map: PropTypes.object,
+  click: PropTypes.func,
+  dblclick: PropTypes.func,
+  dragend: PropTypes.func,
+  mousedown: PropTypes.func,
+  mouseout: PropTypes.func,
+  mouseover: PropTypes.func,
+  mouseup: PropTypes.func,
+  recenter: PropTypes.func
 }
 
-evtNames.forEach(e => Marker.propTypes[e] = PropTypes.func)
+// evtNames.forEach((e) => {
+//   Marker.propTypes[e] = PropTypes.func;
+// })
 
 Marker.defaultProps = {
   name: 'Marker'

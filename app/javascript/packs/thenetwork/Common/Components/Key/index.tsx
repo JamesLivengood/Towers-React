@@ -32,7 +32,7 @@ const Key = ({ adjustMarkerSizeMultiplier }) => {
         <span>Searched Location</span>
       </div>
 
-      <div className="flex justify-center marker-size-adjuster">
+      <div className="mb-10x flex justify-center marker-size-adjuster">
         <span className="round-left">
           <FontAwesomeIcon icon={faMinus} className="decrease-size" onClick={adjustMarkerSizeMultiplier}/>
         </span>
@@ -40,8 +40,19 @@ const Key = ({ adjustMarkerSizeMultiplier }) => {
           <FontAwesomeIcon icon={faPlus} className="increase-size" onClick={adjustMarkerSizeMultiplier}/>
         </span>
       </div>
+
+      <div className="flex justify-center" style={{fontSize: '11px'}}>
+        <a
+          target="_blank"
+          href="http://emfavoiders.com/community/index.php?forums/bugs-inquiries-and-feature-requests.8/"
+          style={{ fontSize: '11px' }}
+        >
+          {"Questions or comments? "}
+        </a>
+      </div>
     </span>
   );
-};
+}
+;
 
 export default Key;

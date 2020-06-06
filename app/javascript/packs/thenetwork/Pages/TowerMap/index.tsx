@@ -5,8 +5,6 @@ import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDow
 import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
 import Key from '../../Common/Components/Key';
 import FoldingCube from '../../Common/Components/FoldingCube';
-import { mapIcons } from 'map-icons';
-
 
 const TowerMap = ({ google, downloads }) => {
   const [zoom, setZoom] = React.useState(() => {
@@ -75,21 +73,23 @@ const TowerMap = ({ google, downloads }) => {
     setMarkerSizeMultiplier(updatedMarkerSize);
   }
 
+  const mapProps = {
+    google: google,
+    zoom: zoom,
+    initialCenter: center,
+    center: center,
+    onReady: onLoad,
+    scaleControl: true,
+    style: { height: '100%', width: '100%' },
+    onTilesloaded: saveCenterAndZoom,
+    onIdle: fetchMarkers,
+    id: "map"
+  }
+
   return (
     <div>
       <input id={"pac-input"} type={"text"} placeholder={"Search Box"} />
-      <Map
-        google={google}
-        zoom={zoom}
-        initialCenter={center}
-        center={center}
-        onReady={onLoad}
-        scaleControl={true}
-        style={{ height: '100%', width: '100%' }}
-        onTilesloaded={saveCenterAndZoom}
-        onIdle={fetchMarkers}
-        id="map"
-      >
+      <Map {...mapProps} >
         {
           towers.map((tower, idx) => {
             let noHeight = !parseInt(tower.height_of_structure);
@@ -177,10 +177,7 @@ const TowerMap = ({ google, downloads }) => {
             }}
           /> : undefined
         }
-        <InfoWindow
-          visible={!!activeMarker.marker}
-          marker={activeMarker.marker}
-        >
+        <InfoWindow visible={!!activeMarker.marker} marker={activeMarker.marker} google={google} map={{broken: "filler"}}>
           <ul>
             {activeMarker.item ? Object.keys(activeMarker.item).map((key) => {
               return <li key={key} style={{ fontSize: '14px' }}>{key}: {activeMarker.item[key]}</li>

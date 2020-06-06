@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 import React from 'react';
 import { Map, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 import { Marker } from '../../Common/Components/Marker';
@@ -65,9 +76,21 @@ var TowerMap = function (_a) {
         localStorage.markerSizeMultiplier = updatedMarkerSize;
         setMarkerSizeMultiplier(updatedMarkerSize);
     };
+    var mapProps = {
+        google: google,
+        zoom: zoom,
+        initialCenter: center,
+        center: center,
+        onReady: onLoad,
+        scaleControl: true,
+        style: { height: '100%', width: '100%' },
+        onTilesloaded: saveCenterAndZoom,
+        onIdle: fetchMarkers,
+        id: "map"
+    };
     return (React.createElement("div", null,
         React.createElement("input", { id: "pac-input", type: "text", placeholder: "Search Box" }),
-        React.createElement(Map, { google: google, zoom: zoom, initialCenter: center, center: center, onReady: onLoad, scaleControl: true, style: { height: '100%', width: '100%' }, onTilesloaded: saveCenterAndZoom, onIdle: fetchMarkers, id: "map" },
+        React.createElement(Map, __assign({}, mapProps),
             towers.map(function (tower, idx) {
                 var noHeight = !parseInt(tower.height_of_structure);
                 var size = (noHeight ? 15 : Math.pow(tower.height_of_structure / 55, 0.33) * 22) * markerSizeMultiplier;
@@ -114,7 +137,7 @@ var TowerMap = function (_a) {
                         url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                         scaledSize: new google.maps.Size(31, 31)
                     } }) : undefined,
-            React.createElement(InfoWindow, { visible: !!activeMarker.marker, marker: activeMarker.marker },
+            React.createElement(InfoWindow, { visible: !!activeMarker.marker, marker: activeMarker.marker, google: google, map: { broken: "filler" } },
                 React.createElement("ul", null, activeMarker.item ? Object.keys(activeMarker.item).map(function (key) {
                     return React.createElement("li", { key: key, style: { fontSize: '14px' } },
                         key,

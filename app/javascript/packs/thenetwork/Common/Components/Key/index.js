@@ -20,11 +20,13 @@ var Key = function (_a) {
         React.createElement("div", { className: "mb-10x flex align-center" },
             React.createElement("img", { className: "h-20x mr-3x", src: "http://maps.google.com/mapfiles/ms/icons/green-dot.png" }),
             React.createElement("span", null, "Searched Location")),
-        React.createElement("div", { className: "flex justify-center marker-size-adjuster" },
+        React.createElement("div", { className: "mb-10x flex justify-center marker-size-adjuster" },
             React.createElement("span", { className: "round-left" },
                 React.createElement(FontAwesomeIcon, { icon: faMinus, className: "decrease-size", onClick: adjustMarkerSizeMultiplier })),
             React.createElement("span", { className: "round-right" },
-                React.createElement(FontAwesomeIcon, { icon: faPlus, className: "increase-size", onClick: adjustMarkerSizeMultiplier })))));
+                React.createElement(FontAwesomeIcon, { icon: faPlus, className: "increase-size", onClick: adjustMarkerSizeMultiplier }))),
+        React.createElement("div", { className: "flex justify-center", style: { fontSize: '11px' } },
+            React.createElement("a", { target: "_blank", href: "http://emfavoiders.com/community/index.php?forums/bugs-inquiries-and-feature-requests.8/", style: { fontSize: '11px' } }, "Questions or comments? "))));
 };
 export default Key;
 //# sourceMappingURL=index.js.map

@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { Map, InfoWindow, GoogleApiWrapper, Circle } from 'google-maps-react';
-import { Marker } from '../../Common/Components/Marker'
+import { Map, InfoWindow, GoogleApiWrapper, Circle, Marker } from 'google-maps-react';
+// import { Marker } from '../../Common/Components/Marker'
 import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDownloads } from '../../Utils/fetches';
 import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
 import Key from '../../Common/Components/Key';
 import FoldingCube from '../../Common/Components/FoldingCube';
+import { showLoader } from '../../Utils/loaderControllers';
 
 const TowerMap = ({ google, downloads }) => {
   const [zoom, setZoom] = React.useState(() => {
@@ -23,9 +24,9 @@ const TowerMap = ({ google, downloads }) => {
   const [displayFoldingCube, setDisplayFoldingCube] = React.useState(() => true);
 
   const fetchMarkers = (mapProps, map): void => {
-    // Display loading icon
-    document.getElementsByClassName("loading-widget")[0].classList.remove("hidden");
-    console.log("DABBY");
+    showLoader();
+    // console.log("DABBY");
+
     if (downloads) {
       fetchSuccesfulDownloads(setSuccesfulDownloads, map.getBounds());
       fetchFailedDownloads(setFailedDownloads, map.getBounds());
@@ -110,7 +111,8 @@ const TowerMap = ({ google, downloads }) => {
         }
         {
           transmitters.map((t, idx) => {
-            if (idx == transmitters.length - 1) console.log('spinner-finish');
+            // if (idx == transmitters.length - 1) console.log('spinner-finish');
+            // console.log(idx, transmitters.length)
             let finalElement = idx === transmitters.length - 1;
             // let noHeight = !parseInt(t.overall_height_of_structure);
             let size = 13 * markerSizeMultiplier//noHeight ? 11 : (t.overall_height_of_structure / 55) * 11;

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { hideLoader } from '../../../Utils/loaderControllers';
 
 const camelize = function (str) {
   return str.split('_').map(function (word) {
@@ -34,15 +35,19 @@ const wrappedPromise = function () {
 export class Marker extends React.Component {
   componentDidMount() {
     if (this.props.finalElement) {
-      // Hide loading icon
-      document.getElementsByClassName("loading-widget")[0].classList.add("hidden");
-      document.getElementsByClassName("page-slow-popup")[0].classList.add("hidden");
+      console.log('componentDidMount', Date.now());
+      hideLoader();
     }
     this.markerPromise = wrappedPromise();
     this.renderMarker();
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.finalElement) {
+      console.log('componentDidUpdate', Date.now());
+      hideLoader();
+    }
+
     if ((this.props.map !== prevProps.map) ||
       (this.props.position !== prevProps.position) ||
       (this.props.icon !== prevProps.icon)) {

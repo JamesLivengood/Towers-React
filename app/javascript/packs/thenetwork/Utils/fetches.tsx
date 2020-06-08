@@ -1,15 +1,25 @@
 import axios from 'axios';
+import { hideLoader } from './loaderControllers';
 
-const fetchParams = (bounds): String => {
+const fetchParams = (bounds): string => {
   return `latmin=${bounds.getSouthWest().lat()}&latmax=${bounds.getNorthEast().lat()}&lngmin=${bounds.getSouthWest().lng()}&lngmax=${bounds.getNorthEast().lng()}`;
 }
 
-export const fetchTowers = (setTowers, bounds): void => {
+let activeNorthEastBound = null;
+let activeSouthWestBound = null;
+
+export const fetchTowers = (setTowers: Function, bounds): void => {
+  let northEastBound = activeNorthEastBound = bounds.getNorthEast().lat(); // TODO: Lat and lng
+  let southWestBound = activeSouthWestBound = bounds.getSouthWest().lat();
+
   axios.get(
     `/api/towers?${fetchParams(bounds)}`
   ).then(res => {
-    console.log('Towers count: ', res.data.length);
-    setTowers(res.data);
+    // console.log('Towers count: ', res.data.length);
+    if (northEastBound === activeNorthEastBound || southWestBound === activeSouthWestBound) {
+      // console.log("SWAG!!!!!!!");
+      setTowers(res.data);
+    }
   })
   .catch(error => {
     console.warn(error);
@@ -17,11 +27,19 @@ export const fetchTowers = (setTowers, bounds): void => {
 };
 
 export const fetchTransmitters = (setTransmitters, bounds): void => {
+  let northEastBound = activeNorthEastBound = bounds.getNorthEast().lat(); // TODO: Lat and lng
+  let southWestBound = activeSouthWestBound = bounds.getSouthWest().lat();
+
   axios.get(
     `/api/transmitters?${fetchParams(bounds)}`
   ).then(res => {
-    console.log('Transmitters count: ', res.data.length);
-    setTransmitters(res.data);
+    // console.log('Transmitters count: ', res.data.length);
+    if (res.data.length === 0) hideLoader();
+    if (northEastBound === activeNorthEastBound || southWestBound === activeSouthWestBound) {
+      console.log('setTransmitters', Date.now());
+      setTransmitters(res.data);
+      hideLoader();
+    }
   })
   .catch(error => {
     console.warn(error);

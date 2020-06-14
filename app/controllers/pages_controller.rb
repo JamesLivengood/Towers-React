@@ -1,6 +1,6 @@
 class PagesController < ActionController::Base
   layout 'towers'
-  after_action :save_user_visit!
+  # after_action :save_user_visit!
 
   private
 

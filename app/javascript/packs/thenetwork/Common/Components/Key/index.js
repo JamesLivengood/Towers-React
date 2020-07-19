@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 var Key = function (_a) {
     var adjustMarkerSizeMultiplier = _a.adjustMarkerSizeMultiplier;
+    var _b = React.useState(function () { return localStorage.hideKey || false; }), hide = _b[0], setHide = _b[1];
     var hideKey = function () {
         document.getElementsByClassName("key")[0].classList.add("hidden");
     };

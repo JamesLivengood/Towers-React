@@ -1,27 +1,43 @@
 import axios from 'axios';
+import { hideLoader } from './loaderControllers';
 var fetchParams = function (bounds) {
-    return bounds.getSouthWest().lat() + "&latmax=" + bounds.getNorthEast().lat() + "&lngmin=" + bounds.getSouthWest().lng() + "&lngmax=" + bounds.getNorthEast().lng();
+    return "latmin=" + bounds.getSouthWest().lat() + "&latmax=" + bounds.getNorthEast().lat() + "&lngmin=" + bounds.getSouthWest().lng() + "&lngmax=" + bounds.getNorthEast().lng();
 };
+var activeNorthEastBound = null;
+var activeSouthWestBound = null;
 export var fetchTowers = function (setTowers, bounds) {
-    axios.get("/api/towers?latmin=" + fetchParams(bounds)).then(function (res) {
-        console.log('Towers count: ', res.data.length);
-        setTowers(res.data);
+    var northEastBound = activeNorthEastBound = bounds.getNorthEast().lat(); // TODO: Lat and lng
+    var southWestBound = activeSouthWestBound = bounds.getSouthWest().lat();
+    axios.get("/api/towers?" + fetchParams(bounds)).then(function (res) {
+        // console.log('Towers count: ', res.data.length);
+        if (northEastBound === activeNorthEastBound || southWestBound === activeSouthWestBound) {
+            // console.log("SWAG!!!!!!!");
+            setTowers(res.data);
+        }
     })
         .catch(function (error) {
         console.warn(error);
     });
 };
 export var fetchTransmitters = function (setTransmitters, bounds) {
-    axios.get("/api/transmitters?latmin=" + fetchParams(bounds)).then(function (res) {
-        console.log('Transmitters count: ', res.data.length);
-        setTransmitters(res.data);
+    var northEastBound = activeNorthEastBound = bounds.getNorthEast().lat(); // TODO: Lat and lng
+    var southWestBound = activeSouthWestBound = bounds.getSouthWest().lat();
+    axios.get("/api/transmitters?" + fetchParams(bounds)).then(function (res) {
+        // console.log('Transmitters count: ', res.data.length);
+        if (res.data.length === 0)
+            hideLoader();
+        if (northEastBound === activeNorthEastBound || southWestBound === activeSouthWestBound) {
+            console.log('setTransmitters', Date.now());
+            setTransmitters(res.data);
+            hideLoader();
+        }
     })
         .catch(function (error) {
         console.warn(error);
     });
 };
 export var fetchSuccesfulDownloads = function (setSuccesfulDownloads, bounds) {
-    axios.get("/api/succesful_downloads?latmin=" + fetchParams(bounds)).then(function (res) {
+    axios.get("/api/succesful_downloads?" + fetchParams(bounds)).then(function (res) {
         setSuccesfulDownloads(res.data);
     })
         .catch(function (error) {
@@ -29,7 +45,7 @@ export var fetchSuccesfulDownloads = function (setSuccesfulDownloads, bounds) {
     });
 };
 export var fetchFailedDownloads = function (setFailedDownloads, bounds) {
-    axios.get("/api/failed_downloads?latmin=" + fetchParams(bounds)).then(function (res) {
+    axios.get("/api/failed_downloads?" + fetchParams(bounds)).then(function (res) {
         setFailedDownloads(res.data);
     })
         .catch(function (error) {

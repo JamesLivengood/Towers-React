@@ -10,12 +10,13 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import React from 'react';
-import { Map, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
-import { Marker } from '../../Common/Components/Marker';
+import { Map, InfoWindow, GoogleApiWrapper, Marker } from 'google-maps-react';
+// import { Marker } from '../../Common/Components/Marker'
 import { fetchTowers, fetchTransmitters, fetchSuccesfulDownloads, fetchFailedDownloads } from '../../Utils/fetches';
 import { towerInfo, transmitterInfo } from '../../Utils/infoMappers';
 import Key from '../../Common/Components/Key';
 import FoldingCube from '../../Common/Components/FoldingCube';
+import { showLoader } from '../../Utils/loaderControllers';
 var TowerMap = function (_a) {
     var google = _a.google, downloads = _a.downloads;
     var _b = React.useState(function () {
@@ -33,9 +34,8 @@ var TowerMap = function (_a) {
     var _k = React.useState(function () { return localStorage.markerSizeMultiplier || 1; }), markerSizeMultiplier = _k[0], setMarkerSizeMultiplier = _k[1];
     var _l = React.useState(function () { return true; }), displayFoldingCube = _l[0], setDisplayFoldingCube = _l[1];
     var fetchMarkers = function (mapProps, map) {
-        // Display loading icon
-        document.getElementsByClassName("sk-folding-cube")[0].classList.remove("hidden");
-        console.log("DABBY");
+        showLoader();
+        // console.log("DABBY");
         if (downloads) {
             fetchSuccesfulDownloads(setSuccesfulDownloads, map.getBounds());
             fetchFailedDownloads(setFailedDownloads, map.getBounds());
@@ -100,8 +100,8 @@ var TowerMap = function (_a) {
                     }, onClick: openMarker, item: towerInfo(tower) }));
             }),
             transmitters.map(function (t, idx) {
-                if (idx == transmitters.length - 1)
-                    console.log('spinner-finish');
+                // if (idx == transmitters.length - 1) console.log('spinner-finish');
+                // console.log(idx, transmitters.length)
                 var finalElement = idx === transmitters.length - 1;
                 // let noHeight = !parseInt(t.overall_height_of_structure);
                 var size = 13 * markerSizeMultiplier; //noHeight ? 11 : (t.overall_height_of_structure / 55) * 11;

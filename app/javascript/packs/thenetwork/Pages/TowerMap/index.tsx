@@ -194,5 +194,5 @@ const TowerMap = ({ google, downloads }) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyAehp1zTFrN3DtQJG2dgduMe8y3Jcbe6r4')
+  apiKey: ('AIzaSyDNHxyV55vl3zjlm_E_ZAvy07h3C6nMqJE')
 })(TowerMap);

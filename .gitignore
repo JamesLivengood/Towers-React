@@ -36,6 +36,10 @@ yarn-debug.log*
 /transmitters
 /transmitters_processed
 /failed_sheets
+/dumpfiles
 
 backup.sql
 mydb2.sql
+latest.dump
+dumpfile2
+config.ru

@@ -1,5 +1,6 @@
 class AreaPopulator
-  RADIUS = 1.8
+  RADIUS = 2.95
+  # Make this 3? Check it's actually spitting back a 3 mile radius by downloading somewhere crowded
   MOVE_DISTANCE = RADIUS * Math.sqrt(3)
   MAINLAND_AMERICA_WEST_MAX = -124.587129
 
@@ -24,7 +25,7 @@ class AreaPopulator
     fetcher.lng = lng
 
     until fetcher.lat > vertical_max
-      until fetcher.lng < horizontal_max || fetcher.lng < MAINLAND_AMERICA_WEST_MAX
+      until fetcher.lng < horizontal_max# || fetcher.lng < MAINLAND_AMERICA_WEST_MAX
         urls << fetcher.url
         fetcher.fetch!
 

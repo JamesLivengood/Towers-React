@@ -2,7 +2,7 @@
 
 ```bundle install```
 
-```npm install```
+```yarn install```
 
 ```spring rake db:reset```
 
@@ -19,3 +19,7 @@ Google Maps React docs: https://github.com/fullstackreact/google-maps-react/blob
 ```pg_dump thenetwork_development > backup.sql```
 
 ```heroku pg:psql < backup.sql```
+
+If getting a "developer error", just make new project with new API key. Currently it is under a project called something like "Project 98345"
+
+Make sure to create folders "towers", "transmitters", and "failed_sheets" if you need to do populating

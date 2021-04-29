@@ -9,7 +9,7 @@ class AntennaSearchFetcher
     @calculator = LatLngCalculator.new
     Capybara.javascript_driver = :webkit
     @options = Selenium::WebDriver::Chrome::Options.new(args: ['headless'])
-    @driver = Selenium::WebDriver.for(:chrome, options: options)
+    @driver = Selenium::WebDriver.for(:safari, options: options)
     @wait = Selenium::WebDriver::Wait.new(timeout: 180)
   end
 
@@ -41,7 +41,7 @@ class AntennaSearchFetcher
 
     if download_towers
       # tower_download = open(tower_link)
-      open('./towers/' + tower_link.split('/').last, 'wb') do |file| 
+      open('./towers/' + tower_link.split('/').last, 'wb') do |file|
         file << open(tower_link).read
       end
       # IO.copy_stream(tower_download, tower_link.split('/').last)
@@ -54,7 +54,7 @@ class AntennaSearchFetcher
 
     if download_transmitters
       # transmitter_download = open(transmitter_link)
-      open('./transmitters/' + transmitter_link.split('/').last, 'wb') do |file| 
+      open('./transmitters/' + transmitter_link.split('/').last, 'wb') do |file|
         file << open(transmitter_link).read
       end
       # IO.copy_stream(transmitter_download, transmitter_link.split('/').last)
@@ -66,10 +66,10 @@ class AntennaSearchFetcher
     end
 
     SuccesfulDownload.create(
-      url: url, 
-      lat: lat, 
-      lng: lng, 
-      had_towers: download_towers, 
+      url: url,
+      lat: lat,
+      lng: lng,
+      had_towers: download_towers,
       had_transmitters: download_transmitters
     )
 

@@ -13,14 +13,14 @@ class FolderFileUploader
       if filename.include? "Tower"
         save_towers!(filename)
         FileUtils.mv(dir_name + filename, "towers_processed/#{filename}")
-      else 
+      else
         save_transmitters!(filename)
         FileUtils.mv(dir_name + filename, "transmitters_processed/#{filename}")
       end
       # SuccesfulDownload.where(tower_filename)
     rescue => e
       FileUtils.mv(dir_name + @filename, "failed_sheets/#{@filename}")
-      # raise e
+      raise e
     end
   end
 
@@ -30,11 +30,11 @@ class FolderFileUploader
     CSV.open(dir_name + filename, 'r', headers: true).each do |tower|
       Tower.create(tower.to_h.delete_if { |k, v| !k || k.empty? })
     end
-  end 
+  end
 
   def save_transmitters!(filename)
     CSV.open(dir_name + filename, 'r', headers: true).each do |transmitter|
       Transmitter.create(transmitter.to_h.delete_if { |k, v| !k || k.empty? })
     end
-  end 
+  end
 end

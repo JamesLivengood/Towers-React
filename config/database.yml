@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: thenetwork_production
-  username: thenetwork
-  password: <%= ENV['THENETWORK_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

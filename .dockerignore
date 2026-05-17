@@ -1,0 +1,38 @@
+# Version control
+.git/
+.gitignore
+
+# Development dependency caches (installed fresh in Docker)
+node_modules/
+.bundle/
+
+# Build output (rebuilt in Docker)
+public/vite/
+public/vite-dev/
+public/assets/
+
+# Logs and temp files
+log/
+tmp/
+storage/
+
+# Test / CI
+spec/
+tests/
+coverage/
+.circleci/
+
+# Local config overrides
+.env
+.env.*
+config/master.key
+
+# macOS artifacts
+.DS_Store
+**/.DS_Store
+
+# Large binaries committed by mistake
+chromedriver_mac32.zip
+
+# Dev-only lock file (we use package-lock.json)
+yarn.lock

@@ -2,21 +2,24 @@
 # Replace "towers-react" with your actual Fly app name (set during `flyctl launch`)
 
 app = "towers-react"
-primary_region = "dfw"  # Dallas — closest free region to Mexico City
+primary_region = "dfw"  # Dallas
 
 [build]
   dockerfile = "Dockerfile"
+
+[deploy]
+  release_command = "bundle exec rails db:migrate"
 
 [env]
   RAILS_ENV = "production"
   RAILS_LOG_TO_STDOUT = "true"
   RAILS_SERVE_STATIC_FILES = "true"
-  MALLOC_ARENA_MAX = "2"          # Reduces Ruby memory fragmentation on free tier
+  MALLOC_ARENA_MAX = "2"
 
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = true       # Saves free-tier hours when idle
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
 
@@ -29,7 +32,7 @@ primary_region = "dfw"  # Dallas — closest free region to Mexico City
   size = "shared-cpu-1x"
   memory = "256mb"
 
-# Uncomment and adjust if you add a Sidekiq worker process:
+# Uncomment to add a Sidekiq worker process:
 # [[processes]]
 #   name = "worker"
 #   entrypoint = ["bundle", "exec", "sidekiq"]

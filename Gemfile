@@ -25,6 +25,7 @@ gem 'browser'
 gem 'geocoder'
 gem 'zester'
 gem 'zillow4r'
+gem 'selenium-webdriver', require: false
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

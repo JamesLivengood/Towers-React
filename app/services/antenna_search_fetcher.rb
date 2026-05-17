@@ -7,9 +7,8 @@ class AntennaSearchFetcher
     @lat = lat
     @lng = lng
     @calculator = LatLngCalculator.new
-    Capybara.javascript_driver = :webkit
-    @options = Selenium::WebDriver::Chrome::Options.new(args: ['headless'])
-    @driver = Selenium::WebDriver.for(:safari, options: options)
+    @options = Selenium::WebDriver::Chrome::Options.new(args: ['headless', 'no-sandbox', 'disable-gpu'])
+    @driver = Selenium::WebDriver.for(:chrome, options: @options)
     @wait = Selenium::WebDriver::Wait.new(timeout: 180)
   end
 

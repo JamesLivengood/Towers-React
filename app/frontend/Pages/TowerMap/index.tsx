@@ -60,32 +60,35 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
     return () => google.maps.event.clearInstanceListeners(searchBox);
   }, [placesLib, map]);
 
-  const handleIdle = useCallback(() => {
+  useEffect(() => {
     if (!map) return;
-    const bounds = map.getBounds();
-    if (!bounds) return;
+    const listener = map.addListener('idle', () => {
+      const bounds = map.getBounds();
+      if (!bounds) return;
 
-    const center = map.getCenter();
-    if (center) {
-      localStorage.lat = center.lat();
-      localStorage.lng = center.lng();
-    }
-    localStorage.zoom = map.getZoom();
+      const center = map.getCenter();
+      if (center) {
+        localStorage.lat = center.lat();
+        localStorage.lng = center.lng();
+      }
+      localStorage.zoom = map.getZoom();
 
-    showLoader();
-    if (downloads) {
-      fetchSuccesfulDownloads(
-        (d) => setSuccessfulDownloads(d as { lat: number; lng: number }[]),
-        bounds
-      );
-      fetchFailedDownloads(
-        (d) => setFailedDownloads(d as { lat: number; lng: number }[]),
-        bounds
-      );
-    } else {
-      fetchTowers((d) => setTowers(d as Record<string, unknown>[]), bounds);
-      fetchTransmitters((d) => setTransmitters(d as Record<string, unknown>[]), bounds);
-    }
+      showLoader();
+      if (downloads) {
+        fetchSuccesfulDownloads(
+          (d) => setSuccessfulDownloads(d as { lat: number; lng: number }[]),
+          bounds
+        );
+        fetchFailedDownloads(
+          (d) => setFailedDownloads(d as { lat: number; lng: number }[]),
+          bounds
+        );
+      } else {
+        fetchTowers((d) => setTowers(d as Record<string, unknown>[]), bounds);
+        fetchTransmitters((d) => setTransmitters(d as Record<string, unknown>[]), bounds);
+      }
+    });
+    return () => listener.remove();
   }, [map, downloads]);
 
   const adjustMarkerSizeMultiplier = useCallback(
@@ -109,7 +112,6 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
         }}
         defaultZoom={Math.max(parseFloat(localStorage.zoom) || 13, 13)}
         minZoom={13}
-        onIdle={handleIdle}
         id="map"
         style={{ height: '100%', width: '100%' }}
       >

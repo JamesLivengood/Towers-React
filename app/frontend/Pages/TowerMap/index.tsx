@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+/// <reference types="google.maps" />
 import {
   APIProvider,
   Map,
@@ -26,10 +27,14 @@ interface ActiveMarker {
   item: Record<string, unknown>;
 }
 
-const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
+// Rendered inside <Map> so useMap() returns the map instance
+const MapInner: React.FC<{ downloads?: boolean; onAdjustSize: (e: React.MouseEvent) => void; markerSizeMultiplier: number }> = ({
+  downloads,
+  onAdjustSize,
+  markerSizeMultiplier,
+}) => {
   const map = useMap();
   const placesLib = useMapsLibrary('places');
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [towers, setTowers] = useState<Record<string, unknown>[]>([]);
   const [transmitters, setTransmitters] = useState<Record<string, unknown>[]>([]);
@@ -37,9 +42,6 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
   const [failedDownloads, setFailedDownloads] = useState<{ lat: number; lng: number }[]>([]);
   const [centerMarker, setCenterMarker] = useState<google.maps.LatLngLiteral | null>(null);
   const [activeMarker, setActiveMarker] = useState<ActiveMarker | null>(null);
-  const [markerSizeMultiplier, setMarkerSizeMultiplier] = useState(
-    () => parseFloat(localStorage.markerSizeMultiplier) || 1
-  );
 
   useEffect(() => {
     if (!placesLib || !map) return;
@@ -91,6 +93,129 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
     return () => listener.remove();
   }, [map, downloads]);
 
+  return (
+    <>
+      {towers.map((tower, idx) => {
+        const noHeight = !parseInt(String(tower.height_of_structure));
+        const size =
+          (noHeight
+            ? 15
+            : Math.pow(Number(tower.height_of_structure) / 55, 0.33) * 22) *
+          markerSizeMultiplier;
+        return (
+          <Marker
+            key={idx}
+            position={{
+              lat: parseFloat(String(tower.latitude)),
+              lng: parseFloat(String(tower.longitude)),
+            }}
+            icon={{
+              url: `http://maps.google.com/mapfiles/ms/icons/${noHeight ? 'orange' : 'red'}-dot.png`,
+              scaledSize: new google.maps.Size(size, size),
+            }}
+            onClick={() =>
+              setActiveMarker({
+                position: {
+                  lat: parseFloat(String(tower.latitude)),
+                  lng: parseFloat(String(tower.longitude)),
+                },
+                item: towerInfo(tower),
+              })
+            }
+          />
+        );
+      })}
+
+      {transmitters.map((t, idx) => {
+        const size = 13 * markerSizeMultiplier;
+        return (
+          <Marker
+            key={idx}
+            position={{
+              lat: parseFloat(String(t.latitude)),
+              lng: parseFloat(String(t.longitude)),
+            }}
+            icon={{
+              url: `http://maps.google.com/mapfiles/ms/icons/${t.sitetype === 'Multiple' ? 'yellow' : 'blue'}-dot.png`,
+              scaledSize: new google.maps.Size(size, size),
+            }}
+            onClick={() =>
+              setActiveMarker({
+                position: {
+                  lat: parseFloat(String(t.latitude)),
+                  lng: parseFloat(String(t.longitude)),
+                },
+                item: transmitterInfo(t),
+              })
+            }
+          />
+        );
+      })}
+
+      {successfulDownloads.map((sd, idx) => (
+        <Marker
+          key={idx}
+          position={{ lat: sd.lat, lng: sd.lng }}
+          icon={{
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 23,
+            fillColor: '#F00',
+            fillOpacity: 0.3,
+            strokeWeight: 0.1,
+          }}
+        />
+      ))}
+
+      {failedDownloads.map((fd, idx) => (
+        <Marker
+          key={idx}
+          position={{ lat: fd.lat, lng: fd.lng }}
+          icon={{
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 23,
+            fillColor: '#0000ff',
+            fillOpacity: 0.3,
+            strokeWeight: 0.1,
+          }}
+        />
+      ))}
+
+      {centerMarker && (
+        <Marker
+          position={centerMarker}
+          icon={{
+            url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            scaledSize: new google.maps.Size(31, 31),
+          }}
+        />
+      )}
+
+      {activeMarker && (
+        <InfoWindow
+          position={activeMarker.position}
+          onCloseClick={() => setActiveMarker(null)}
+        >
+          <ul>
+            {Object.entries(activeMarker.item).map(([key, val]) => (
+              <li key={key} style={{ fontSize: '14px' }}>
+                {key}: {String(val)}
+              </li>
+            ))}
+          </ul>
+        </InfoWindow>
+      )}
+
+      <FoldingCube displayFoldingCube={true} />
+      <Key adjustMarkerSizeMultiplier={onAdjustSize} />
+    </>
+  );
+};
+
+const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
+  const [markerSizeMultiplier, setMarkerSizeMultiplier] = useState(
+    () => parseFloat(localStorage.markerSizeMultiplier) || 1
+  );
+
   const adjustMarkerSizeMultiplier = useCallback(
     (e: React.MouseEvent) => {
       const classList = (e.currentTarget as Element).classList.value;
@@ -104,7 +229,7 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
 
   return (
     <div style={{ position: 'relative', height: '100vh', width: '100%' }}>
-      <input ref={searchInputRef} id="pac-input" type="text" placeholder="Search Box" />
+      <input id="pac-input" type="text" placeholder="Search Box" />
       <Map
         defaultCenter={{
           lat: parseFloat(localStorage.lat) || 40.35658673905037,
@@ -115,119 +240,12 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
         id="map"
         style={{ height: '100%', width: '100%' }}
       >
-        {towers.map((tower, idx) => {
-          const noHeight = !parseInt(String(tower.height_of_structure));
-          const size =
-            (noHeight
-              ? 15
-              : Math.pow(Number(tower.height_of_structure) / 55, 0.33) * 22) *
-            markerSizeMultiplier;
-          return (
-            <Marker
-              key={idx}
-              position={{
-                lat: parseFloat(String(tower.latitude)),
-                lng: parseFloat(String(tower.longitude)),
-              }}
-              icon={{
-                url: `http://maps.google.com/mapfiles/ms/icons/${noHeight ? 'orange' : 'red'}-dot.png`,
-                scaledSize: new google.maps.Size(size, size),
-              }}
-              onClick={() =>
-                setActiveMarker({
-                  position: {
-                    lat: parseFloat(String(tower.latitude)),
-                    lng: parseFloat(String(tower.longitude)),
-                  },
-                  item: towerInfo(tower),
-                })
-              }
-            />
-          );
-        })}
-
-        {transmitters.map((t, idx) => {
-          const size = 13 * markerSizeMultiplier;
-          return (
-            <Marker
-              key={idx}
-              position={{
-                lat: parseFloat(String(t.latitude)),
-                lng: parseFloat(String(t.longitude)),
-              }}
-              icon={{
-                url: `http://maps.google.com/mapfiles/ms/icons/${t.sitetype === 'Multiple' ? 'yellow' : 'blue'}-dot.png`,
-                scaledSize: new google.maps.Size(size, size),
-              }}
-              onClick={() =>
-                setActiveMarker({
-                  position: {
-                    lat: parseFloat(String(t.latitude)),
-                    lng: parseFloat(String(t.longitude)),
-                  },
-                  item: transmitterInfo(t),
-                })
-              }
-            />
-          );
-        })}
-
-        {successfulDownloads.map((sd, idx) => (
-          <Marker
-            key={idx}
-            position={{ lat: sd.lat, lng: sd.lng }}
-            icon={{
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 23,
-              fillColor: '#F00',
-              fillOpacity: 0.3,
-              strokeWeight: 0.1,
-            }}
-          />
-        ))}
-
-        {failedDownloads.map((fd, idx) => (
-          <Marker
-            key={idx}
-            position={{ lat: fd.lat, lng: fd.lng }}
-            icon={{
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 23,
-              fillColor: '#0000ff',
-              fillOpacity: 0.3,
-              strokeWeight: 0.1,
-            }}
-          />
-        ))}
-
-        {centerMarker && (
-          <Marker
-            position={centerMarker}
-            icon={{
-              url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-              scaledSize: new google.maps.Size(31, 31),
-            }}
-          />
-        )}
-
-        {activeMarker && (
-          <InfoWindow
-            position={activeMarker.position}
-            onCloseClick={() => setActiveMarker(null)}
-          >
-            <ul>
-              {Object.entries(activeMarker.item).map(([key, val]) => (
-                <li key={key} style={{ fontSize: '14px' }}>
-                  {key}: {String(val)}
-                </li>
-              ))}
-            </ul>
-          </InfoWindow>
-        )}
+        <MapInner
+          downloads={downloads}
+          onAdjustSize={adjustMarkerSizeMultiplier}
+          markerSizeMultiplier={markerSizeMultiplier}
+        />
       </Map>
-
-      <FoldingCube displayFoldingCube={true} />
-      <Key adjustMarkerSizeMultiplier={adjustMarkerSizeMultiplier} />
     </div>
   );
 };

@@ -34,7 +34,7 @@ ENV RAILS_ENV=production \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development:test"
 
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile ./
 RUN bundle install --jobs 4 --retry 3 && \
     rm -rf "${BUNDLE_PATH}"/ruby/*/cache
 

@@ -12,8 +12,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'vite_rails'
 
 gem 'rack-cors', require: 'rack/cors'
-gem 'redis', '~> 4.1'
-gem 'sidekiq'
 gem 'jbuilder', '~> 2.7'
 gem 'dartsass-sprockets'
 

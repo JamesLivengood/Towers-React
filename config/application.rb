@@ -17,7 +17,30 @@ require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+if ENV["RAILS_ENV"] == "production"
+  $app_require_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  $stderr.puts "APP: starting Bundler.require at t=#{($boot_env_start ? Process.clock_gettime(Process::CLOCK_MONOTONIC) - $boot_env_start : 0).round(2)}s"
+
+  orig_require = Kernel.instance_method(:require)
+  $slow_requires = {}
+  Kernel.define_method(:require) do |path|
+    t0 = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    result = orig_require.bind(self).call(path)
+    elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - t0
+    if elapsed > 0.3
+      $stderr.puts "APP SLOW REQUIRE (#{elapsed.round(2)}s): #{path}"
+    end
+    result
+  end
+
+  Bundler.require(*Rails.groups)
+
+  Kernel.define_method(:require, orig_require)
+  elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - $app_require_start
+  $stderr.puts "APP: Bundler.require complete in #{elapsed.round(2)}s"
+else
+  Bundler.require(*Rails.groups)
+end
 
 module Thenetwork
   class Application < Rails::Application

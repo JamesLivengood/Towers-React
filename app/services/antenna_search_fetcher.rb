@@ -1,6 +1,7 @@
 # https://stackoverflow.com/questions/15804425/curl-on-ruby-on-rails
 require 'net/http'
 require 'open-uri'
+require 'selenium-webdriver'
 class AntennaSearchFetcher
   attr_accessor :lat, :lng, :calculator, :options, :driver, :wait
   def initialize(lat, lng)

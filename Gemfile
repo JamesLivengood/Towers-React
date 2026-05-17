@@ -48,7 +48,6 @@ group :test do
   gem 'simplecov', require: false
   gem 'minitest'
   gem 'minitest-rails'
-  gem 'selenium-webdriver'
   gem 'capybara-chrome'
 end
 

@@ -42,8 +42,10 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
   );
 
   useEffect(() => {
-    if (!placesLib || !searchInputRef.current || !map) return;
-    const searchBox = new placesLib.SearchBox(searchInputRef.current);
+    if (!placesLib || !map) return;
+    const input = document.getElementById('pac-input') as HTMLInputElement;
+    if (!input) return;
+    const searchBox = new placesLib.SearchBox(input);
     searchBox.addListener('places_changed', () => {
       const places = searchBox.getPlaces();
       if (!places?.length) return;

@@ -48,8 +48,7 @@ COPY --from=node_builder /app/node_modules/vite/package.json /rails/node_modules
 COPY . .
 
 # Compile Sprockets CSS (Vite already built in node_builder stage above)
-RUN VITE_RUBY_SKIP_ASSETS_PRECOMPILE=true \
-    VITE_RUBY_SKIP_COMPATIBILITY_CHECK=true \
+RUN VITE_RUBY_SKIP_ASSETS_PRECOMPILE_EXTENSION=true \
     SECRET_KEY_BASE_DUMMY=1 \
     bundle exec rails assets:precompile
 

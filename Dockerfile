@@ -54,7 +54,8 @@ RUN VITE_RUBY_SKIP_ASSETS_PRECOMPILE_EXTENSION=true \
 
 # Set up entrypoint and non-root user
 COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN useradd --create-home --shell /bin/bash rails && \
+RUN mkdir -p /rails/tmp/pids /rails/log && \
+    useradd --create-home --shell /bin/bash rails && \
     chown -R rails:rails /rails
 USER rails
 

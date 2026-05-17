@@ -63,6 +63,20 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
     const bounds = map.getBounds();
     if (!bounds) return;
 
+    // Enforce maximum 100 square miles displayed.
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+    const latDiff = Math.abs(ne.lat() - sw.lat());
+    const lngDiff = Math.abs(ne.lng() - sw.lng());
+    const avgLat = (ne.lat() + sw.lat()) / 2;
+    const milesPerLatDeg = 69.0;
+    const milesPerLngDeg = 69.0 * Math.cos((avgLat * Math.PI) / 180);
+    const areaSqMiles = latDiff * milesPerLatDeg * (lngDiff * milesPerLngDeg);
+    if (areaSqMiles > 100) {
+      map.setZoom((map.getZoom() ?? 10) + 1);
+      return;
+    }
+
     const center = map.getCenter();
     if (center) {
       localStorage.lat = center.lat();
@@ -105,7 +119,7 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
           lat: parseFloat(localStorage.lat) || 40.101013,
           lng: parseFloat(localStorage.lng) || -74.404992,
         }}
-        defaultZoom={parseFloat(localStorage.zoom) || 11}
+        defaultZoom={Math.max(parseFloat(localStorage.zoom) || 13, 13)}
         onIdle={handleIdle}
         id="map"
         style={{ height: '100%', width: '100%' }}

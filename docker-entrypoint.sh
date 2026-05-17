@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+ENTRYPOINT_START=$(date +%s%3N)
+echo "ENTRYPOINT: started at t=0"
+
 if [ "$RAILS_ENV" = "production" ]; then
   # Run migrations in background so Puma can start immediately on port 3000.
   # Fly.io's proxy times out in ~8s if the port is not open, so blocking here
@@ -19,4 +22,6 @@ if [ "$RAILS_ENV" = "production" ]; then
   ) &
 fi
 
+NOW=$(date +%s%3N)
+echo "ENTRYPOINT: exec-ing puma at $((NOW - ENTRYPOINT_START))ms"
 exec "$@"

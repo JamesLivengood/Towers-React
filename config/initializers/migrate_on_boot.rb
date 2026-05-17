@@ -6,10 +6,7 @@ if Rails.env.production?
         ActiveRecord::Migration.check_all_pending!
       rescue ActiveRecord::PendingMigrationError
         begin
-          ActiveRecord::MigrationContext.new(
-            Rails.root.join("db/migrate").to_s,
-            ActiveRecord::SchemaMigration
-          ).migrate
+          ActiveRecord::MigrationContext.new(Rails.root.join("db/migrate").to_s).migrate
           Rails.logger.info "Migrations complete"
         rescue => e
           attempt += 1

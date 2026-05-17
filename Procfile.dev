@@ -1,2 +1,2 @@
-web: bundle exec puma
-worker: ruby ./bin/webpack-dev-server
+web: bundle exec rails server -p 3000
+js: bundle exec vite dev

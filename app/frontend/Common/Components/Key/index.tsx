@@ -1,0 +1,61 @@
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+
+interface KeyProps {
+  adjustMarkerSizeMultiplier: (e: React.MouseEvent) => void;
+}
+
+const Key = ({ adjustMarkerSizeMultiplier }: KeyProps) => {
+  const hideKey = () => {
+    document.getElementsByClassName('key')[0]?.classList.add('hidden');
+  };
+
+  return (
+    <span className="key">
+      <FontAwesomeIcon icon={faTimes} className="x" onClick={hideKey} />
+
+      <div className="mb-10x flex align-center">
+        <img className="h-20x mr-3x" src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" alt="Tower" />
+        <span>Tower</span>
+      </div>
+
+      <div className="mb-10x flex align-center">
+        <img className="h-20x mr-3x" src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="Single Antenna" />
+        <span>Single Antenna</span>
+      </div>
+
+      <div className="mb-10x flex align-center">
+        <img className="h-20x mr-3x" src="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" alt="Multiple Antennas" />
+        <span>Multiple Antennas</span>
+      </div>
+
+      <div className="mb-10x flex align-center">
+        <img className="h-20x mr-3x" src="http://maps.google.com/mapfiles/ms/icons/green-dot.png" alt="Searched Location" />
+        <span>Searched Location</span>
+      </div>
+
+      <div className="mb-10x flex justify-center marker-size-adjuster">
+        <span className="round-left">
+          <FontAwesomeIcon icon={faMinus} className="decrease-size" onClick={adjustMarkerSizeMultiplier} />
+        </span>
+        <span className="round-right">
+          <FontAwesomeIcon icon={faPlus} className="increase-size" onClick={adjustMarkerSizeMultiplier} />
+        </span>
+      </div>
+
+      <div className="flex justify-center" style={{ fontSize: '11px' }}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="http://emfavoiders.com/community/index.php?forums/bugs-inquiries-and-feature-requests.8/"
+          style={{ fontSize: '11px' }}
+        >
+          Questions or comments?
+        </a>
+      </div>
+    </span>
+  );
+};
+
+export default Key;

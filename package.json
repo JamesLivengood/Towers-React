@@ -1,45 +1,32 @@
 {
   "name": "thenetwork",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "@babel/preset-react": "^7.0.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.27",
-    "@fortawesome/free-solid-svg-icons": "^5.12.1",
-    "@fortawesome/react-fontawesome": "^0.1.8",
-    "@rails/actioncable": "^6.0.0-alpha",
-    "@rails/activestorage": "^6.0.0-alpha",
-    "@rails/ujs": "^6.0.0-alpha",
-    "@rails/webpacker": "^4.2.2",
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.12",
-    "@types/react": "^16.9.7",
-    "@types/react-dom": "^16.9.2",
-    "@types/react-router-dom": "^5.1.0",
-    "axios": "^0.19.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "google-maps-react": "2.0.2",
-    "graphql": "^14.5.8",
-    "map-icons": "^3.0.3",
-    "npm-check": "^5.9.2",
-    "prop-types": "^15.7.2",
-    "puppeteer": "^2.0.0",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-papaparse": "^1.0.5",
-    "react-router-dom": "^5.1.2",
-    "ts-loader": "^6.2.0",
-    "turbolinks": "^5.2.0",
-    "typescript": "^3.6.4",
-    "webpack-dev-server": "^3.11.0",
-    "yarn": "1.15.2"
+    "@fortawesome/fontawesome-svg-core": "^6.5.0",
+    "@fortawesome/free-solid-svg-icons": "^6.5.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@vis.gl/react-google-maps": "^1.1.0",
+    "axios": "^1.6.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0"
   },
-  "version": "0.1.0",
+  "devDependencies": {
+    "@types/google.maps": "^3.55.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.1.0",
+    "vite-plugin-ruby": "^3.3.0"
+  },
+  "version": "0.2.0",
   "engines": {
-    "node": "15.13.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
-    "start": "ruby ./bin/webpack-dev-server",
-    "tsc": "tsc",
-    "postinstall": "npm run tsc"
+    "build": "vite build",
+    "dev": "vite"
   }
 }

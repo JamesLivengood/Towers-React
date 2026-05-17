@@ -41,11 +41,15 @@ RUN bundle install --jobs 4 --retry 3 && \
 # Copy Vite-built assets from node stage
 COPY --from=node_builder /app/public/vite /rails/public/vite
 
+# Copy vite npm package.json so vite_ruby's version check passes at boot
+COPY --from=node_builder /app/node_modules/vite/package.json /rails/node_modules/vite/package.json
+
 # Copy application code
 COPY . .
 
 # Compile Sprockets CSS (Vite already built in node_builder stage above)
 RUN VITE_RUBY_SKIP_ASSETS_PRECOMPILE=true \
+    VITE_RUBY_SKIP_COMPATIBILITY_CHECK=true \
     SECRET_KEY_BASE_DUMMY=1 \
     bundle exec rails assets:precompile
 

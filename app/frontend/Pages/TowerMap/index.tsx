@@ -74,7 +74,7 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
     const areaSqMiles = latDiff * milesPerLatDeg * (lngDiff * milesPerLngDeg);
     if (areaSqMiles > 100) {
       map.setZoom((map.getZoom() ?? 10) + 1);
-      return;
+      // Don't return — still fetch for current bounds so map isn't empty while zooming
     }
 
     const center = map.getCenter();

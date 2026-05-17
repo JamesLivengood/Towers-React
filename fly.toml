@@ -8,6 +8,8 @@ primary_region = 'dfw'
 
 [build]
   dockerfile = 'Dockerfile'
+  [build.args]
+    VITE_GOOGLE_MAPS_API_KEY = ""
 
 [env]
   MALLOC_ARENA_MAX = '2'

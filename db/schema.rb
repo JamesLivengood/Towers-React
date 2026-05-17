@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2020_06_06_170641) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_17_215340) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -134,6 +134,7 @@ ActiveRecord::Schema[7.2].define(version: 2020_06_06_170641) do
     t.datetime "updated_at", null: false
     t.float "lat_float"
     t.float "lng_float"
+    t.boolean "mocked", default: false, null: false
     t.index ["latitude"], name: "index_towers_on_latitude"
     t.index ["longitude"], name: "index_towers_on_longitude"
   end
@@ -185,6 +186,7 @@ ActiveRecord::Schema[7.2].define(version: 2020_06_06_170641) do
     t.datetime "updated_at", null: false
     t.float "lat_float"
     t.float "lng_float"
+    t.boolean "mocked", default: false, null: false
     t.index ["latitude"], name: "index_transmitters_on_latitude"
     t.index ["longitude"], name: "index_transmitters_on_longitude"
   end

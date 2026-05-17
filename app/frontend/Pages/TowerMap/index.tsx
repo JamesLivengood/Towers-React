@@ -102,8 +102,8 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
       <input ref={searchInputRef} id="pac-input" type="text" placeholder="Search Box" />
       <Map
         defaultCenter={{
-          lat: parseFloat(localStorage.lat) || 36.6664,
-          lng: parseFloat(localStorage.lng) || -96.7919,
+          lat: parseFloat(localStorage.lat) || 40.35658673905037,
+          lng: parseFloat(localStorage.lng) || -74.67068971274729,
         }}
         defaultZoom={Math.max(parseFloat(localStorage.zoom) || 13, 13)}
         minZoom={13}

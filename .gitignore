@@ -18,6 +18,9 @@
 !/storage/.keep
 
 /public/assets
+/public/vite
+populate_log*
+.DS_Store
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.

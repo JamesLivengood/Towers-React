@@ -19,7 +19,7 @@ import Key from '../../Common/Components/Key';
 import FoldingCube from '../../Common/Components/FoldingCube';
 import { showLoader } from '../../Utils/loaderControllers';
 
-const MAPS_API_KEY = 'AIzaSyDNHxyV55vl3zjlm_E_ZAvy07h3C6nMqJE';
+const MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 interface ActiveMarker {
   position: google.maps.LatLngLiteral;
@@ -116,8 +116,8 @@ const MapContent: React.FC<{ downloads?: boolean }> = ({ downloads }) => {
       <input ref={searchInputRef} id="pac-input" type="text" placeholder="Search Box" />
       <Map
         defaultCenter={{
-          lat: parseFloat(localStorage.lat) || 40.101013,
-          lng: parseFloat(localStorage.lng) || -74.404992,
+          lat: parseFloat(localStorage.lat) || 36.6664,
+          lng: parseFloat(localStorage.lng) || -96.7919,
         }}
         defaultZoom={Math.max(parseFloat(localStorage.zoom) || 13, 13)}
         onIdle={handleIdle}

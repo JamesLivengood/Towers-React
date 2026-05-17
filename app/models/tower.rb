@@ -1,9 +1,5 @@
 class Tower < ApplicationRecord
-  validate :ensure_unique
-
-  def ensure_unique
-    errors.add(:base, 'This exact tower already exists!') if Tower.where(self.attributes.without(["id", "created_at", "updated_at"])).present?
-  end
+  validates :registration_number, uniqueness: true, allow_blank: true
 
   def self.write_all_to_csv(filename = "latest_towers.csv")
     CSV.open(filename, "wb") do |csv|

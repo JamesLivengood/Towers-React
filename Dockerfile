@@ -53,9 +53,8 @@ RUN VITE_RUBY_SKIP_ASSETS_PRECOMPILE_EXTENSION=true \
     bundle exec rails assets:precompile
 
 # Set up entrypoint and non-root user
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
-    useradd --create-home --shell /bin/bash rails && \
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN useradd --create-home --shell /bin/bash rails && \
     chown -R rails:rails /rails
 USER rails
 

@@ -13,7 +13,7 @@ gem 'vite_rails'
 
 gem 'rack-cors', require: 'rack/cors'
 gem 'jbuilder', '~> 2.7'
-gem 'dartsass-sprockets'
+gem 'dartsass-sprockets', require: false
 
 gem 'graphql'
 gem 'addressable'

@@ -41,9 +41,6 @@ RUN bundle install --jobs 4 --retry 3 && \
 # Copy Vite-built assets from node stage
 COPY --from=node_builder /app/public/vite /rails/public/vite
 
-# Copy vite npm package.json so vite_ruby's version check passes at boot
-COPY --from=node_builder /app/node_modules/vite/package.json /rails/node_modules/vite/package.json
-
 # Copy application code
 COPY . .
 

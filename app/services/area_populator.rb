@@ -20,6 +20,12 @@ class AreaPopulator
     vertical_max = fetcher.lat + calculator.change_in_latitude(height + MOVE_DISTANCE)
     horizontal_max = fetcher.lng - calculator.change_in_longitude(fetcher.lat, width + MOVE_DISTANCE)
 
+    total_rows = ((height + MOVE_DISTANCE) / MOVE_DISTANCE).ceil
+    total_cols = ((width + MOVE_DISTANCE) / MOVE_DISTANCE).ceil
+    total_steps = total_rows * total_cols
+    completed = 0
+    start_time = Time.now
+
     # Set midway points if passed
     fetcher.lat = lat
     fetcher.lng = lng
@@ -28,6 +34,15 @@ class AreaPopulator
       until fetcher.lng < horizontal_max# || fetcher.lng < MAINLAND_AMERICA_WEST_MAX
         urls << fetcher.url
         fetcher.fetch!
+
+        completed += 1
+        elapsed = Time.now - start_time
+        rate = completed / elapsed
+        remaining = total_steps - completed
+        eta_seconds = rate > 0 ? (remaining / rate).to_i : 0
+        eta_str = "%02d:%02d:%02d" % [eta_seconds / 3600, (eta_seconds % 3600) / 60, eta_seconds % 60]
+        puts "[#{completed}/~#{total_steps}] lat=#{fetcher.lat.round(5)}, lng=#{fetcher.lng.round(5)} | #{rate.round(2)} fetches/s | ETA #{eta_str} | RESUME_LAT=#{fetcher.lat.round(5)} RESUME_LNG=#{fetcher.lng.round(5)}"
+        $stdout.flush
 
         fetcher.move(:left, MOVE_DISTANCE)
       end

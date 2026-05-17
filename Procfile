@@ -1,2 +1,2 @@
-web: bundle exec puma
-worker: ruby ./bin/webpack-dev-server
+web: bundle exec puma -C config/puma.rb
+worker: bundle exec sidekiq
